@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Domain.Models.PostModel
+namespace Domain.Models.Post
 {
-    public class Post
+    public class PostModel
     {
         public int IdPost { get; set; }
         public DateTime Date { get; set; }

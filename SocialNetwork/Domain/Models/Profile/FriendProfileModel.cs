@@ -1,13 +1,13 @@
-﻿using Domain.Models.SkillModel;
+﻿using Domain.Models.Skill;
 using System.Collections.Generic;
 
-namespace Domain.Models.ProfileModel
+namespace Domain.Models.Profile
 {
-    public class AmigoPerfil : ProfileBase
+    public class AmigoPerfil : ProfileBaseModel
     {
         public int IdFriend { get; set; }
         public int Level { get; set; }
-        public List<Skill> Skills { get; set; }
+        public List<SkillModel> Skills { get; set; }
         public bool SendChallenge { get; set; }
     }
 }

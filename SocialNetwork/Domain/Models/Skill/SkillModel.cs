@@ -1,7 +1,7 @@
 ﻿
-namespace Domain.Models.SkillModel
+namespace Domain.Models.Skill
 {
-    public class Skill
+    public class SkillModel
     {
         public int IdSkill { get; set; }
         public string Name { get; set; }

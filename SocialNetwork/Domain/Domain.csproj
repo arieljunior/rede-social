@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1B1E08A3-0EDF-48A1-BD04-432B71127CA5}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{6FAE4AFA-EC57-42DE-B4DE-8CF126A3EFFF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Domain</RootNamespace>
     <AssemblyName>Domain</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -42,16 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\PostModel\Post.cs" />
-    <Compile Include="Models\ProfileModel\CompanyProfile.cs" />
-    <Compile Include="Models\ProfileModel\FriendProfile.cs" />
-    <Compile Include="Models\ProfileModel\ProfileBase.cs" />
-    <Compile Include="Models\SkillModel\Skill.cs" />
+    <Compile Include="Models\Post\PostModel.cs" />
+    <Compile Include="Models\Profile\CompanyProfileModel.cs" />
+    <Compile Include="Models\Profile\FriendProfileModel.cs" />
+    <Compile Include="Models\Profile\ProfileBaseModel.cs" />
+    <Compile Include="Models\Skill\SkillModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
