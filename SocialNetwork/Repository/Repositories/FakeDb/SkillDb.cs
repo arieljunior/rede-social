@@ -1,26 +1,28 @@
-﻿using Repository.Interfaces.Repositories;
+﻿using Domain.Models.Skill;
+using Repository.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.Repositories
+namespace Repository.Repositories.FakeDb
 {
-    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public class SkillDb : IRepositoryBase<SkillModel>
     {
+        private static List<SkillModel> SkillData = new List<SkillModel>();
 
-        public bool Add(T obj)
+        public bool Add(SkillModel obj)
         {
             throw new NotImplementedException();
         }
 
-        public List<T> GetAll()
+        public List<SkillModel> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public T GetById(int id)
+        public SkillModel GetById(int id)
         {
             throw new NotImplementedException();
         }
@@ -30,7 +32,7 @@ namespace Repository.Repositories
             throw new NotImplementedException();
         }
 
-        public bool Update(T obj)
+        public bool Update(SkillModel obj)
         {
             throw new NotImplementedException();
         }

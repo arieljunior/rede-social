@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Domain.Models.Profile
 {
-    public class AmigoPerfil : ProfileBaseModel
+    public class FriendProfileModel : ProfileBaseModel
     {
         public int IdFriend { get; set; }
         public int Level { get; set; }
