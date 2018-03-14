@@ -8,6 +8,7 @@ namespace Domain.Models.Profile
     {
         public string Name { get; set; }
         public string LastName { get; set; }
+        public string UrlPhoto { get; set; }
         public string Email { get; set; }
         public string City { get; set; }
         public DateTime DateCreated { get; set; }

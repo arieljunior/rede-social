@@ -1,10 +1,8 @@
 ﻿using Domain.Models.Profile;
-using Repository.Interfaces.Repositories;
+using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Models.Skill;
 
 namespace Repository.Repositories.FakeDb
 {
@@ -12,7 +10,7 @@ namespace Repository.Repositories.FakeDb
     {
         private static List<FriendProfileModel> ProfileData = new List<FriendProfileModel>();
 
-        public bool Add(FriendProfileModel obj)
+        public bool Save(FriendProfileModel obj)
         {
             try
             {
@@ -69,48 +67,10 @@ namespace Repository.Repositories.FakeDb
                     profile.LastName = obj.LastName;
                     profile.City = obj.City;
                     profile.Email = obj.Email;
-                    profile.SendChallenge = obj.SendChallenge;
+                    profile.Level = obj.Level;
+                    profile.Skills = obj.Skills;
                     return true;
                 }
-            }
-
-            return false;
-        }
-
-        public bool LevelUp(int idProfile, int amountToUpload)
-        {
-            try
-            {
-                var FriendLevelUp = GetById(idProfile);
-                FriendLevelUp.Level += amountToUpload;
-
-                return true;
-            }catch(Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-            return false;
-        }
-
-        public bool ChangeChoiceOfChallenge(int idProfile)
-        {
-            try
-            {
-                var MyProfile = GetById(idProfile);
-
-                if (MyProfile.SendChallenge)
-                {
-                    MyProfile.SendChallenge = false;
-                } else
-                {
-                    MyProfile.SendChallenge = true;
-                }
-
-                return true;
-            }catch(Exception ex)
-            {
-                Console.WriteLine(ex);
             }
 
             return false;

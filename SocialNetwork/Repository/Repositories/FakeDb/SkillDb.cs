@@ -1,5 +1,5 @@
 ﻿using Domain.Models.Skill;
-using Repository.Interfaces.Repositories;
+using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,33 +8,55 @@ using System.Threading.Tasks;
 
 namespace Repository.Repositories.FakeDb
 {
-    public class SkillDb : IRepositoryBase<SkillModel>
+    public class SkillDb
     {
         private static List<SkillModel> SkillData = new List<SkillModel>();
 
-        public bool Add(SkillModel obj)
+        public bool Save(SkillModel obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                SkillData.Add(obj);
+
+                return true;
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return false;
         }
 
         public List<SkillModel> GetAll()
         {
-            throw new NotImplementedException();
+            return SkillData;
         }
 
         public SkillModel GetById(int id)
         {
-            throw new NotImplementedException();
+            foreach (var skill in SkillData)
+            {
+                if (id == skill.IdSkill)
+                {
+                    return skill;
+                }
+            }
+
+            return null;
         }
 
         public bool Remove(int id)
         {
-            throw new NotImplementedException();
-        }
+            foreach (var skill in SkillData)
+            {
+                if (id == skill.IdSkill)
+                {
+                    SkillData.Remove(skill);
+                    return true;
+                }
+            }
 
-        public bool Update(SkillModel obj)
-        {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }

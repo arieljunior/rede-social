@@ -1,4 +1,4 @@
-﻿using Repository.Interfaces.Repositories;
+﻿using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace Repository.Repositories
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
 
-        public bool Add(T obj)
+        public bool Save(T obj)
         {
             throw new NotImplementedException();
         }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.Interfaces.Repositories
+namespace Repository.Interfaces
 {
     public interface IRepositoryBase<T> where T : class
     {
-        bool Add(T obj);
+        bool Save(T obj);
         List<T> GetAll();
         T GetById(int id);
         bool Update(T obj);

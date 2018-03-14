@@ -1,5 +1,5 @@
 ﻿using Domain.Models.Post;
-using Repository.Interfaces.Repositories;
+using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace Repository.Repositories.FakeDb
     {
         private static List<PostModel> PostData = new List<PostModel>();
 
-        public bool Add(PostModel obj)
+        public bool Save(PostModel obj)
         {
 
             try
@@ -65,7 +65,8 @@ namespace Repository.Repositories.FakeDb
             {
                 if (obj.IdPost == post.IdPost)
                 {
-                    post.Content = obj.Content;
+                    post.Message = obj.Message;
+                    post.UrlImage = obj.UrlImage;
                     return true;
                 }
             }
