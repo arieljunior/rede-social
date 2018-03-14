@@ -6,11 +6,11 @@ using Domain.Models.Skill;
 
 namespace Repository.Repositories.FakeDb
 {
-    public class ProfileDB : IRepositoryBase<FriendProfileModel>
+    public class ProfileDB : IRepositoryBase<ProfileModel>
     {
-        private static List<FriendProfileModel> ProfileData = new List<FriendProfileModel>();
+        private static List<ProfileModel> ProfileData = new List<ProfileModel>();
 
-        public bool Save(FriendProfileModel obj)
+        public bool Save(ProfileModel obj)
         {
             try
             {
@@ -25,16 +25,16 @@ namespace Repository.Repositories.FakeDb
             return false;
         }
 
-        public List<FriendProfileModel> GetAll()
+        public List<ProfileModel> GetAll()
         {
             return ProfileData;
         }
 
-        public FriendProfileModel GetById(int id)
+        public ProfileModel GetById(int id)
         {
             foreach (var profile in ProfileData)
             {
-                if (id == profile.IdFriend)
+                if (id == profile.IdProfile)
                 {
                     return profile;
                 }
@@ -47,7 +47,7 @@ namespace Repository.Repositories.FakeDb
         {
             foreach (var profile in ProfileData)
             {
-                if (id == profile.IdFriend)
+                if (id == profile.IdProfile)
                 {
                     ProfileData.Remove(profile);
                     return true;
@@ -57,16 +57,17 @@ namespace Repository.Repositories.FakeDb
             return false;
         }
 
-        public bool Update(FriendProfileModel obj)
+        public bool Update(ProfileModel obj)
         {
             foreach (var profile in ProfileData)
             {
-                if (obj.IdFriend == profile.IdFriend)
+                if (obj.IdProfile == profile.IdProfile)
                 {
                     profile.Name = obj.Name;
                     profile.LastName = obj.LastName;
                     profile.City = obj.City;
                     profile.Email = obj.Email;
+                    profile.Password = obj.Password;
                     profile.Level = obj.Level;
                     profile.Skills = obj.Skills;
                     return true;

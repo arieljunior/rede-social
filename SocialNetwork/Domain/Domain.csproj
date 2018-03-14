@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="Models\Post\PostModel.cs" />
     <Compile Include="Models\Profile\CompanyProfileModel.cs" />
-    <Compile Include="Models\Profile\FriendProfileModel.cs" />
+    <Compile Include="Models\Profile\ProfileModel.cs" />
     <Compile Include="Models\Profile\ProfileBaseModel.cs" />
     <Compile Include="Models\Skill\SkillModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

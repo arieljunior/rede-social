@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Domain.Models.Profile
 {
-    public class FriendProfileModel : ProfileBaseModel
+    public class ProfileModel : ProfileBaseModel
     {
-        public int IdFriend { get; set; }
+        public int IdProfile { get; set; }
         public int Level { get; set; }
         public List<SkillModel> Skills { get; set; }
         //lista de ids dos desafios completados. Os desafios seram Post com tipo (type) true
