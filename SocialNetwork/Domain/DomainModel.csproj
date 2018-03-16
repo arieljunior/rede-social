@@ -45,11 +45,10 @@
     <Compile Include="Entities\Profile\ProfileModel.cs" />
     <Compile Include="Entities\Profile\ProfileBaseModel.cs" />
     <Compile Include="Entities\Skill\SkillModel.cs" />
+    <Compile Include="Interfaces\Repositories\IRepository.cs" />
+    <Compile Include="Interfaces\Services\IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\Repositories\" />
-    <Folder Include="Interfaces\Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
