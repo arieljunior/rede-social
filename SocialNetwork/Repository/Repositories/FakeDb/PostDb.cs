@@ -1,12 +1,12 @@
-﻿using Domain.Models.Post;
-using Repository.Interfaces;
+﻿using DomainModel.Entities.Post;
+using Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.Repositories.FakeDb
+namespace Data.Repositories.FakeDb
 {
     public class PostDb : IRepositoryBase<PostModel>
     {

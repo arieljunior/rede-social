@@ -1,10 +1,10 @@
-﻿using Domain.Models.Profile;
-using Repository.Interfaces;
+﻿using DomainModel.Entities.Profile;
+using Data.Interfaces;
 using System;
 using System.Collections.Generic;
-using Domain.Models.Skill;
+using DomainModel.Entities.Skill;
 
-namespace Repository.Repositories.FakeDb
+namespace Data.Repositories.FakeDb
 {
     public class ProfileDB : IRepositoryBase<ProfileModel>
     {

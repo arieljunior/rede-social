@@ -1,6 +1,6 @@
 ﻿using Application.Factory.Profile;
-using Domain.Models.Profile;
-using Repository.Repositories.FakeDb;
+using DomainModel.Entities.Profile;
+using Data.Repositories.FakeDb;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,8 +1,8 @@
 ﻿using Application.Factory.Interfaces;
-using Domain.Models.Post;
-using Domain.Models.Profile;
-using Domain.Models.Skill;
-using Repository.Repositories.FakeDb;
+using DomainModel.Entities.Post;
+using DomainModel.Entities.Profile;
+using DomainModel.Entities.Skill;
+using Data.Repositories.FakeDb;
 using System;
 using System.Collections.Generic;
 using System.Linq;
