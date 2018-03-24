@@ -10,8 +10,8 @@ namespace Domain.Interfaces.Services
     {
         bool Create(T obj);
         IEnumerable<T> GetAll();
-        T GetById(int id);
+        T GetById(string id);
         bool UpDate(T obj);
-        bool Delete(int id);
+        bool Delete(string id);
     }
 }

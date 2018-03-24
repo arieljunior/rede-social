@@ -1,10 +1,9 @@
-﻿using Data.Context;
-using Domain.Interfaces.Repositories;
+﻿using Domain.Interfaces.Repositories;
 using DomainModel.Entities;
 using DomainModel.Entities.Profile;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,40 +12,84 @@ namespace Data.Repositories
 {
     public class ProfileRepository : IRepository<ProfileModel>
     {
-        private SocialNetworkContext _socialNetworkContext;
-        private DbSet<ProfileModel> _dbset;
+        private string _connectionString;
+        private SqlConnection _sqlConnection;
 
-        public ProfileRepository(SocialNetworkContext socialNetworkContext)
+        public ProfileRepository()
         {
-            _socialNetworkContext = socialNetworkContext;
-            _dbset = socialNetworkContext.Set<ProfileModel>();
+            _connectionString = Data.Properties.Settings.Default.DbConnectionString;
+            _sqlConnection = new SqlConnection(_connectionString);
         }
         public IEnumerable<ProfileModel> GetAll()
         {
             return null;
         }
 
-        public ProfileModel GetById(int id)
+        public ProfileModel GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public bool Remove(int id)
+        public bool Remove(string id)
         {
-            throw new NotImplementedException();
+            var result = false;
+            SqlCommand cmd = new SqlCommand($"DELETE FROM Profile WHERE Id = '{id}'", _sqlConnection);
+            try
+            {
+                _sqlConnection.Open();
+                result = cmd.ExecuteNonQuery() > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                _sqlConnection.Close();
+            }
+            return result;
         }
 
         public bool Save(ProfileModel profile)
         {
-            _dbset.Add(profile);
-            _socialNetworkContext.SaveChanges();
+            var result = false;
+            SqlCommand cmd = new SqlCommand($"INSERT INTO Profile (Id, FirstName, LastName, Password, UrlPhoto, Email," +
+                $"City, DateCreated) Values ('{profile.IdProfile}'," +
+                $"'{profile.Name}', '{profile.LastName}', '{profile.Password}','{profile.UrlPhoto}'," +
+                $"'{profile.Email}', '{profile.City}', '{profile.DateCreated}' )", _sqlConnection);
+            try
+            {
+                _sqlConnection.Open();
+                result = cmd.ExecuteNonQuery() > 0 ? true : false;
+            }catch(Exception ex)
+            {
 
-            return true;
+            }
+            finally
+            {
+                _sqlConnection.Close();
+            }
+            return result;
         }
 
         public bool UpDate(ProfileModel obj)
         {
-            throw new NotImplementedException();
+            var result = false;
+            SqlCommand cmd = new SqlCommand($"DELETE FROM Profile WHERE Id = '{id}'", _sqlConnection);
+            try
+            {
+                _sqlConnection.Open();
+                result = cmd.ExecuteNonQuery() > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                _sqlConnection.Close();
+            }
+            return result;
         }
     }
 }

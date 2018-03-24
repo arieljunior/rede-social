@@ -26,7 +26,10 @@ namespace Data.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"Server=tcp:socialnetworkdb.database.windows.net,1433;Initial Catalog=SocialNetworkDB;Persist Security Info=False;User ID=snadmin;Password=PROJETO_infnet{your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=tcp:socialnetworkdb.database.windows.net,1433;Initial Catalog=SocialNetwor" +
+            "kDB;Persist Security Info=False;User ID=snadmin;Password=PROJETO_infnet;Multiple" +
+            "ActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Time" +
+            "out=30;")]
         public string DbConnectionString {
             get {
                 return ((string)(this["DbConnectionString"]));

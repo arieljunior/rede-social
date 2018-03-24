@@ -29,12 +29,12 @@ namespace DomainService.Services
             return _profileRepository.GetAll();
         }
 
-        public ProfileModel GetById(int id)
+        public ProfileModel GetById(string id)
         {
             return _profileRepository.GetById(id);
         }
 
-        public bool Delete(int id)
+        public bool Delete(string id)
         {
             return _profileRepository.Remove(id);
         }

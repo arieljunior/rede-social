@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Company\CompanyModel.cs" />
+    <Compile Include="Entities\Job\JobModel.cs" />
     <Compile Include="Entities\Post\PostModel.cs" />
     <Compile Include="Entities\Profile\CompanyProfileModel.cs" />
     <Compile Include="Entities\Profile\ProfileModel.cs" />

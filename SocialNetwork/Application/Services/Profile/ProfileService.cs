@@ -1,6 +1,5 @@
 ﻿using Application.Factory.Profile;
 using DomainModel.Entities.Profile;
-using Data.Repositories.FakeDb;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +11,21 @@ namespace Application.Services.Profile
     public class ProfileService
     {
         private new ProfileFactory Factory = new ProfileFactory();
-        private new ProfileDB DataBase = new ProfileDB();
+        //private new ProfileDB DataBase = new ProfileDB();
 
-        public bool CreateProfile(ProfileModel profile)
-        {
-            var NewProfile = Factory.Build();
+        //public bool CreateProfile(ProfileModel profile)
+        //{
+        //    var NewProfile = Factory.Build();
 
-            NewProfile.Name = profile.Name.ToLower();
-            NewProfile.LastName = profile.LastName.ToLower();
-            NewProfile.Email = profile.Email;
-            NewProfile.Password = profile.Password;
-            NewProfile.City = profile.City != null && profile.City != "" ? profile.City : NewProfile.City;
-            NewProfile.UrlPhoto = profile.UrlPhoto != null && profile.UrlPhoto != "" ? profile.UrlPhoto : NewProfile.UrlPhoto;
+        //    NewProfile.Name = profile.Name.ToLower();
+        //    NewProfile.LastName = profile.LastName.ToLower();
+        //    NewProfile.Email = profile.Email;
+        //    NewProfile.Password = profile.Password;
+        //    NewProfile.City = profile.City != null && profile.City != "" ? profile.City : NewProfile.City;
+        //    NewProfile.UrlPhoto = profile.UrlPhoto != null && profile.UrlPhoto != "" ? profile.UrlPhoto : NewProfile.UrlPhoto;
 
-            return DataBase.Save(NewProfile);
-        }
+        //    return DataBase.Save(NewProfile);
+        //}
 
     }
 }

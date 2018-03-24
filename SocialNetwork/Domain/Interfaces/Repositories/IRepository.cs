@@ -10,8 +10,8 @@ namespace Domain.Interfaces.Repositories
     {
         bool Save(T obj);
         IEnumerable<T> GetAll();
-        T GetById(int id);
+        T GetById(string id);
         bool UpDate(T obj);
-        bool Remove(int id);
+        bool Remove(string id);
     }
 }
