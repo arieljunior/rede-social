@@ -22,18 +22,80 @@ namespace Data.Repositories
         }
         public IEnumerable<ProfileModel> GetAll()
         {
-            return null;
+            var Profiles = new List<ProfileModel>();
+            SqlCommand cmd = new SqlCommand($"SELECT * FROM Profile", _sqlConnection);
+
+            try
+            {
+                _sqlConnection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var profile = new ProfileModel();
+                    profile.IdProfile = Guid.Parse(reader["Id"].ToString());
+                    profile.Name = reader["FirstName"].ToString();
+                    profile.LastName = reader["LastName"].ToString();
+                    profile.Password = reader["Password"].ToString();
+                    profile.UrlPhoto = reader["UrlPhoto"].ToString();
+                    profile.City = reader["City"].ToString();
+                    profile.DateCreated = DateTime.Parse(reader["DateCreated"].ToString());
+                    profile.Email = reader["Email"].ToString();
+                    profile.Followers = 0;//reader["Followers"] != null? (int)reader["Followers"] : 0;
+                    profile.Following = 0;//reader["Following"] != null? (int)reader["Following"] : 0;
+                    Profiles.Add(profile);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                _sqlConnection.Close();
+            }
+
+            return Profiles;
         }
 
         public ProfileModel GetById(string id)
         {
-            throw new NotImplementedException();
+            ProfileModel profileResult = new ProfileModel();
+            SqlCommand cmd = new SqlCommand($"SELECT * FROM Profile WHERE Id='{id.ToUpper()}'", _sqlConnection);
+
+            try
+            {
+                _sqlConnection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if(reader.Read())
+                {
+                    profileResult.IdProfile = Guid.Parse(reader["Id"].ToString());
+                    profileResult.Name = reader["FirstName"].ToString();
+                    profileResult.LastName = reader["LastName"].ToString();
+                    profileResult.Password = reader["Password"].ToString();
+                    profileResult.UrlPhoto = reader["UrlPhoto"].ToString();
+                    profileResult.City = reader["City"].ToString();
+                    profileResult.DateCreated = DateTime.Parse(reader["DateCreated"].ToString());
+                    profileResult.Email = reader["Email"].ToString();
+                    profileResult.Followers = 0;//reader["Followers"] != null? (int)reader["Followers"] : 0;
+                    profileResult.Following = 0;//reader["Following"] != null? (int)reader["Following"] : 0;
+
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            finally
+            {
+                _sqlConnection.Close();
+            }
+
+            return profileResult;
         }
 
         public bool Remove(string id)
         {
             var result = false;
-            SqlCommand cmd = new SqlCommand($"DELETE FROM Profile WHERE Id = '{id}'", _sqlConnection);
+            SqlCommand cmd = new SqlCommand($"DELETE FROM Profile WHERE Id = '{id.ToUpper()}'", _sqlConnection);
             try
             {
                 _sqlConnection.Open();
@@ -72,10 +134,12 @@ namespace Data.Repositories
             return result;
         }
 
-        public bool UpDate(ProfileModel obj)
+        public bool UpDate(string id, ProfileModel profile)
         {
             var result = false;
-            SqlCommand cmd = new SqlCommand($"DELETE FROM Profile WHERE Id = '{id}'", _sqlConnection);
+            SqlCommand cmd = new SqlCommand($"UPDATE Profile SET FirstName = '{profile.Name}', LastName='{profile.LastName}', " +
+                $"Password='{profile.Password}', UrlPhoto='{profile.UrlPhoto}', Email='{profile.Email}'," +
+                $"City='{profile.City}' WHERE Id = '{id.ToUpper()}'", _sqlConnection);
             try
             {
                 _sqlConnection.Open();

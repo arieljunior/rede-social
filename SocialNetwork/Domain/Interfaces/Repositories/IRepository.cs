@@ -11,7 +11,7 @@ namespace Domain.Interfaces.Repositories
         bool Save(T obj);
         IEnumerable<T> GetAll();
         T GetById(string id);
-        bool UpDate(T obj);
+        bool UpDate(string id,T obj);
         bool Remove(string id);
     }
 }

@@ -13,15 +13,15 @@ namespace ApiProfile.Controllers
     {
         ProfileRepository db = new ProfileRepository();
         // GET: api/Profile
-        public IEnumerable<string> Get()
+        public IEnumerable<ProfileModel> Get()
         {
-            return new string[] { "value1", "value2" };
+            return db.GetAll();
         }
 
         // GET: api/Profile/5
-        public string Get(string id)
+        public ProfileModel Get(string id)
         {
-            return "value";
+            return db.GetById(id);
         }
 
         // POST: api/Profile
@@ -42,8 +42,14 @@ namespace ApiProfile.Controllers
         }
 
         // PUT: api/Profile/5
-        public void Put(int id, [FromBody]string value)
+        public HttpResponseMessage Put(string id, ProfileModel profile)
         {
+            if(profile != null)
+            {
+                if (db.UpDate(id, profile)) return Request.CreateResponse(HttpStatusCode.OK, "Atualizado");
+            }
+
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Erro");
         }
 
         // DELETE: api/Profile/5
