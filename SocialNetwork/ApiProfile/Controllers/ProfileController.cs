@@ -19,16 +19,16 @@ namespace ApiProfile.Controllers
         }
 
         // GET: api/Profile/5
-        public ProfileModel Get(string id)
+        public string Get(string email)
         {
-            return db.GetById(id);
+            //var newEmail = email + ".com";
+            return db.GetIdProfile(email);
         }
 
         // POST: api/Profile
-        public HttpResponseMessage Post(ProfileModel value)
+        public HttpResponseMessage Post(ProfileModel profile)
         {
-            var profile = new ProfileModel();
-            profile = value;
+
             if (profile != null)
             {
                 //tratar os dados com as conf default antes de salvar

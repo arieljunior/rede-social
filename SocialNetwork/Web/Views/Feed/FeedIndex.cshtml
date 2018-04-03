@@ -1,0 +1,88 @@
+﻿@model Web.Models.FeedViewModel
+
+@{
+    ViewBag.Title = "FeedIndex";
+}
+
+<h2>FeedIndex</h2>
+
+<div>
+    <h4>FeedViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MyElo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MyElo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MyHonors)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MyHonors)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MyMensage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MyMensage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Followers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Followers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Following)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Following)
+        </dd>
+
+        @*@if (Model.MyId.Equals(Guid.Parse(Session["session_id"].ToString())))
+        {
+        <dd>
+            <input type="text" class="form-control" />
+        </dd>*@
+            <dd>
+                @Html.DisplayNameFor(model => model.MensageFromPost)
+            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.MensageFromPost)
+        </dd>
+
+    </dl>
+</div>
+    @foreach(var post in Model.Posts)
+    {
+        <ul class="list-group">
+                <li class="list-group-item">Autor da postagem: @post.Name</li>
+                <li class="list-group-item">Imagem: @post.UrlImage</li>
+                <li class="list-group-item">Mensagem: @post.Mensage</li>
+                <li class="list-group-item">Curtidas @post.Like</li>
+                <li class="list-group-item">Elo: @post.Elo</li>
+        </ul>
+    }
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

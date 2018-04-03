@@ -1,8 +1,10 @@
-﻿using Domain.Interfaces.Repositories;
+﻿using Data.Context;
+using Domain.Interfaces.Repositories;
 using DomainModel.Entities;
 using DomainModel.Entities.Profile;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,39 +12,55 @@ using System.Threading.Tasks;
 
 namespace Data.Repositories
 {
-    public class ProfileRepository : IRepository<ProfileModel>
+    public class ProfileRepository : IRepository<Profile>
     {
-        private string _connectionString;
-        private SqlConnection _sqlConnection;
+        private DbConnectionString _socialNetworkContext;
+        private DbSet<Profile> _dbSet;
 
-        public ProfileRepository()
+        public ProfileRepository(DbConnectionString socialNetworkContext)
         {
-            _connectionString = Data.Properties.Settings.Default.DbConnectionString;
-            _sqlConnection = new SqlConnection(_connectionString);
+
+            _socialNetworkContext = socialNetworkContext;
+            _dbSet = socialNetworkContext.Set<Profile>();
         }
-        public IEnumerable<ProfileModel> GetAll()
+
+        public IEnumerable<Profile> GetAll()
         {
-            var Profiles = new List<ProfileModel>();
-            SqlCommand cmd = new SqlCommand($"SELECT * FROM Profile", _sqlConnection);
+            return _dbSet;
+        }
+
+        public Profile GetById(Guid id)
+        {
+            return _dbSet.Find(id);
+        }
+
+        public bool Remove(Profile profile)
+        {
+            try
+            {
+                _dbSet.Remove(profile);
+                _socialNetworkContext.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public string GetIdByEmail(string email)
+        {
+            var connection = new SqlConnection("Server=tcp:socialnetworkdb.database.windows.net,1433;Initial Catalog=SocialNetworkDB;Persist Security Info=False;User ID=snadmin;Password=PROJETO_infnet;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            SqlCommand sqlCommand = new SqlCommand($"SELECT Id from AspNetUSers WHERE Email='{email}'", connection);
+            string Email = "";
 
             try
             {
-                _sqlConnection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                connection.Open();
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                if (reader.Read())
                 {
-                    var profile = new ProfileModel();
-                    profile.IdProfile = Guid.Parse(reader["Id"].ToString());
-                    profile.Name = reader["FirstName"].ToString();
-                    profile.LastName = reader["LastName"].ToString();
-                    profile.Password = reader["Password"].ToString();
-                    profile.UrlPhoto = reader["UrlPhoto"].ToString();
-                    profile.City = reader["City"].ToString();
-                    profile.DateCreated = DateTime.Parse(reader["DateCreated"].ToString());
-                    profile.Email = reader["Email"].ToString();
-                    profile.Followers = 0;//reader["Followers"] != null? (int)reader["Followers"] : 0;
-                    profile.Following = 0;//reader["Following"] != null? (int)reader["Following"] : 0;
-                    Profiles.Add(profile);
+                    Email = reader["Email"].ToString();
                 }
             }
             catch (Exception ex)
@@ -50,110 +68,38 @@ namespace Data.Repositories
             }
             finally
             {
-                _sqlConnection.Close();
+                connection.Close();
             }
-
-            return Profiles;
+                return Email;
         }
 
-        public ProfileModel GetById(string id)
+        public bool Save(Profile obj)
         {
-            ProfileModel profileResult = new ProfileModel();
-            SqlCommand cmd = new SqlCommand($"SELECT * FROM Profile WHERE Id='{id.ToUpper()}'", _sqlConnection);
-
             try
             {
-                _sqlConnection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if(reader.Read())
-                {
-                    profileResult.IdProfile = Guid.Parse(reader["Id"].ToString());
-                    profileResult.Name = reader["FirstName"].ToString();
-                    profileResult.LastName = reader["LastName"].ToString();
-                    profileResult.Password = reader["Password"].ToString();
-                    profileResult.UrlPhoto = reader["UrlPhoto"].ToString();
-                    profileResult.City = reader["City"].ToString();
-                    profileResult.DateCreated = DateTime.Parse(reader["DateCreated"].ToString());
-                    profileResult.Email = reader["Email"].ToString();
-                    profileResult.Followers = 0;//reader["Followers"] != null? (int)reader["Followers"] : 0;
-                    profileResult.Following = 0;//reader["Following"] != null? (int)reader["Following"] : 0;
-
-                }
+                _dbSet.Add(obj);
+                _socialNetworkContext.SaveChanges();
+                return true;
             }
-            catch(Exception ex)
+            catch
             {
-
+                return false;
             }
-            finally
-            {
-                _sqlConnection.Close();
-            }
-
-            return profileResult;
         }
 
-        public bool Remove(string id)
+        public bool UpDate(Profile profile)
         {
-            var result = false;
-            SqlCommand cmd = new SqlCommand($"DELETE FROM Profile WHERE Id = '{id.ToUpper()}'", _sqlConnection);
             try
             {
-                _sqlConnection.Open();
-                result = cmd.ExecuteNonQuery() > 0 ? true : false;
+                _socialNetworkContext.Entry(profile).State = EntityState.Modified;
+                _socialNetworkContext.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
+            catch
             {
-
+                return false;
             }
-            finally
-            {
-                _sqlConnection.Close();
-            }
-            return result;
-        }
-
-        public bool Save(ProfileModel profile)
-        {
-            var result = false;
-            SqlCommand cmd = new SqlCommand($"INSERT INTO Profile (Id, FirstName, LastName, Password, UrlPhoto, Email," +
-                $"City, DateCreated) Values ('{profile.IdProfile}'," +
-                $"'{profile.Name}', '{profile.LastName}', '{profile.Password}','{profile.UrlPhoto}'," +
-                $"'{profile.Email}', '{profile.City}', '{profile.DateCreated}' )", _sqlConnection);
-            try
-            {
-                _sqlConnection.Open();
-                result = cmd.ExecuteNonQuery() > 0 ? true : false;
-            }catch(Exception ex)
-            {
-
-            }
-            finally
-            {
-                _sqlConnection.Close();
-            }
-            return result;
-        }
-
-        public bool UpDate(string id, ProfileModel profile)
-        {
-            var result = false;
-            SqlCommand cmd = new SqlCommand($"UPDATE Profile SET FirstName = '{profile.Name}', LastName='{profile.LastName}', " +
-                $"Password='{profile.Password}', UrlPhoto='{profile.UrlPhoto}', Email='{profile.Email}'," +
-                $"City='{profile.City}' WHERE Id = '{id.ToUpper()}'", _sqlConnection);
-            try
-            {
-                _sqlConnection.Open();
-                result = cmd.ExecuteNonQuery() > 0 ? true : false;
-            }
-            catch (Exception ex)
-            {
-
-            }
-            finally
-            {
-                _sqlConnection.Close();
-            }
-            return result;
+            
         }
     }
 }

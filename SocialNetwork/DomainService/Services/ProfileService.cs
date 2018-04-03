@@ -9,27 +9,27 @@ using System.Threading.Tasks;
 
 namespace DomainService.Services
 {
-    public class ProfileService : IService<ProfileModel>
+    public class ProfileService : IService<Profile>
     {
-        private IRepository<ProfileModel> _profileRepository;
+        private IRepository<Profile> _profileRepository;
 
-        public ProfileService(IRepository<ProfileModel> profileRepository)
+        public ProfileService(IRepository<Profile> profileRepository)
         {
             _profileRepository = profileRepository;
         }
 
-        public bool Create(ProfileModel obj)
+        public bool Create(Profile obj)
         {
             return _profileRepository.Save(obj);
             
         }
 
-        public IEnumerable<ProfileModel> GetAll()
+        public IEnumerable<Profile> GetAll()
         {
             return _profileRepository.GetAll();
         }
 
-        public ProfileModel GetById(string id)
+        public Profile GetById(string id)
         {
             return _profileRepository.GetById(id);
         }
@@ -39,9 +39,9 @@ namespace DomainService.Services
             return _profileRepository.Remove(id);
         }
 
-        public bool UpDate(ProfileModel obj)
+        public bool UpDate(Profile obj)
         {
-            return _profileRepository.UpDate(obj);
+            return false;//_profileRepository.UpDate(obj);
         }
     }
 }

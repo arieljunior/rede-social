@@ -13,7 +13,7 @@ namespace Application.Services.Profile
         private new ProfileFactory Factory = new ProfileFactory();
         //private new ProfileDB DataBase = new ProfileDB();
 
-        //public bool CreateProfile(ProfileModel profile)
+        //public bool CreateProfile(Profile profile)
         //{
         //    var NewProfile = Factory.Build();
 

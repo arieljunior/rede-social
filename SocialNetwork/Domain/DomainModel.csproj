@@ -40,13 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Company\CompanyModel.cs" />
-    <Compile Include="Entities\Job\JobModel.cs" />
     <Compile Include="Entities\Post\PostModel.cs" />
-    <Compile Include="Entities\Profile\CompanyProfileModel.cs" />
-    <Compile Include="Entities\Profile\ProfileModel.cs" />
-    <Compile Include="Entities\Profile\ProfileBaseModel.cs" />
-    <Compile Include="Entities\Skill\SkillModel.cs" />
+    <Compile Include="Entities\Profile\Profile.cs" />
     <Compile Include="Interfaces\Repositories\IRepository.cs" />
     <Compile Include="Interfaces\Services\IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -13,6 +13,7 @@ namespace DomainModel.Entities.Post
         public string Message { get; set; }
         public string UrlImage { get; set; }
         public int IdProfile { get; set; }
-        
+        public string Name { get; set; }
+
     }
 }
