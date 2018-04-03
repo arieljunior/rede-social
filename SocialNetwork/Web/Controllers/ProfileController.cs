@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using DomainModel.Entities.Profile;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Web.Models;
@@ -22,33 +25,25 @@ namespace Web.Controllers
         // GET: Profile
         public ActionResult Index()
         {
-            //var Books = new List<ProfileViewModel>();
-            //var requisicaoWeb = WebRequest.CreateHttp(UrlApi);
-            //requisicaoWeb.Method = "GET";
+            string id = Session["session_id"].ToString();
+            HttpClient cliente = new HttpClient();
+            Task<HttpResponseMessage> resultado = cliente.GetAsync(UrlApi + id);
 
-            //using (var resposta = requisicaoWeb.GetResponse())
-            //{
-            //    var streamDados = resposta.GetResponseStream();
-            //    StreamReader reader = new StreamReader(streamDados);
-            //    object objResponse = reader.ReadToEnd();
-            //    var booksData = JsonConvert.DeserializeObject<List<Book>>(objResponse.ToString());
-            //    foreach (var b in booksData)
-            //    {
-            //        var book = new BookViewModel()
-            //        {
-            //            Id = b.BookId,
-            //            Title = b.Title,
-            //            Isbn = b.Isbn,
-            //            Year = b.Year
-            //        };
-            //        Books.Add(book);
+            Task<ProfileViewModel> taskProfilesTeste = resultado.Result.Content.ReadAsAsync<ProfileViewModel>();
+            ProfileViewModel ProfileTeste = taskProfilesTeste.Result;
 
-            //    }
-            //    streamDados.Close();
-            //    resposta.Close();
-            //}
+            Task<Profile> taskProfile = resultado.Result.Content.ReadAsAsync<Profile>();
+            Profile Profile = taskProfile.Result;
 
-            return View();
+            var ViewProfile = new ProfileViewModel() {
+                City = Profile.City,
+                LastName = Profile.LastName,
+                Name = Profile.Name,
+                UrlPhoto = Profile.UrlPhoto,
+                Id = Profile.Id
+            };
+
+            return View(ViewProfile);
         }
 
         // GET: Profile/Details/5

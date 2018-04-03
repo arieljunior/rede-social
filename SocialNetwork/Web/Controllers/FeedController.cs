@@ -17,7 +17,7 @@ namespace Web.Controllers
             string id = Session["session_id"].ToString();
             var myFeed = new FeedViewModel()
             {
-                MyId = Guid.Parse("b0e63dca-7867-4664-a7ab-9770491ed3c0"),
+                MyId = Guid.Parse(id),
                 MyName = "Ariel Junior",
                 MyElo = "Platina IV",
                 MyHonors = "Honra 5",

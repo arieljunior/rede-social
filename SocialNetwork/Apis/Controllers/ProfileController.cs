@@ -33,7 +33,7 @@ namespace Apis.Controllers
         [HttpGet, Route("api/ProfileGetId/{id}")]
         public string GetId(string id)
         {//o id é email
-            string Email = HttpUtility.UrlDecode(id);
+            string Email = id.Replace("!", ".");//HttpUtility.UrlDecode(id);
 
             return db.GetIdByEmail(Email);
         }

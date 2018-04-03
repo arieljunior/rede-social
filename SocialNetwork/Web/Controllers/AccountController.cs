@@ -89,7 +89,7 @@ namespace Web.Controllers
             {
                 case SignInStatus.Success:
                     Session["session_email"] = model.Email;
-                    Session["session_id"] = GetId(model.Email);
+                    Session["session_id"] = GetIdAsync(model.Email);
 
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -102,34 +102,18 @@ namespace Web.Controllers
                     return View(model);
             }
         }
-        private static string GetId(string email)
+        private async Task<string> GetIdAsync(string email)
         {
+            string Email = email.Replace(".", "!");
+
             HttpClient client = new HttpClient();
-            string url = HttpUtility.UrlEncode(email);
-            client.BaseAddress = new Uri("http://localhost:51450/"+url);
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-            Task<HttpResponseMessage> response = client.GetAsync("api/Profile/" + url);
+            //string url = HttpUtility.UrlEncode(email);
+            //client.BaseAddress = new Uri("http://localhost:51450/"+url);
+            //client.DefaultRequestHeaders.Accept.Add(
+            //    new MediaTypeWithQualityHeaderValue("application/json"));
+            string response = await client.GetStringAsync("http://localhost:51450/api/ProfileGetId/"+Email);
 
-            return response.Id.ToString();
-            //if (response.Result.IsSuccessStatusCode)
-            //    return RedirectToAction("ListAuthors");
-
-            //string newEmail = email.Substring(0, email.IndexOf("."));
-            //var requisicaoWeb = WebRequest.CreateHttp("http://localhost:51450/api/Profile/" + newEmail);
-            //requisicaoWeb.Method = "GET";
-
-            //string id = null;
-            //using (var resposta = requisicaoWeb.GetResponse())
-            //{
-            //    var streamDados = resposta.GetResponseStream();
-            //    StreamReader reader = new StreamReader(streamDados);
-            //    id = reader.ReadToEnd();
-            //    streamDados.Close();
-            //    resposta.Close();
-            //}
-
-
+            return response;
         }
 
 

@@ -52,7 +52,7 @@ namespace Data.Repositories
         {
             var connection = new SqlConnection("Server=tcp:socialnetworkdb.database.windows.net,1433;Initial Catalog=SocialNetworkDB;Persist Security Info=False;User ID=snadmin;Password=PROJETO_infnet;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             SqlCommand sqlCommand = new SqlCommand($"SELECT Id from AspNetUSers WHERE Email='{email}'", connection);
-            string Email = "";
+            string Email = null;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Data.Repositories
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 if (reader.Read())
                 {
-                    Email = reader["Email"].ToString();
+                    Email = reader["Id"].ToString();
                 }
             }
             catch (Exception ex)
