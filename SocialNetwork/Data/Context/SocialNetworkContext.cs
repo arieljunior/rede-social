@@ -9,8 +9,12 @@ using System.Threading.Tasks;
 
 namespace Data.Context
 {
-    public class DbConnectionString : DbContext
+    public class SocialNetworkContext : DbContext
     {
+        public SocialNetworkContext()
+            : base(Data.Properties.Settings.Default.DbConnectionString)
+        { }
+
         public DbSet<Profile> Profiles { get; set; }
       
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

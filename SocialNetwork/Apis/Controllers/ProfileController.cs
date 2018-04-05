@@ -21,7 +21,7 @@ namespace Apis.Controllers
 
         public ProfileController()
         {
-            db = new ProfileRepository(new DbConnectionString());
+            db = new ProfileRepository(new SocialNetworkContext());
         }
 
         // GET: api/Profile
@@ -40,15 +40,15 @@ namespace Apis.Controllers
 
         // GET: api/Profile/5
         [ResponseType(typeof(Profile))]
-        public IHttpActionResult GetProfile(Guid id)
+        public Profile GetProfile(Guid id)
         {
             Profile Profile = db.GetById(id);
             if (Profile == null)
             {
-                return NotFound();
+                return null;
             }
 
-            return Ok(Profile);
+            return Profile;
         }
 
         // PUT: api/Profile/5
@@ -72,22 +72,12 @@ namespace Apis.Controllers
         [ResponseType(typeof(Profile))]
         public HttpResponseMessage PostProfile(Profile profile)
         {
-            var Profile = new Profile()
-            {
-                Id = Guid.NewGuid(),
-                City = profile.City,
-                Followers = profile.Followers,
-                Following = profile.Following,
-                LastName = profile.LastName,
-                Name = profile.Name,
-                UrlPhoto = profile.UrlPhoto
-            };
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Erro");
             }
 
-            if (db.Save(Profile))
+            if (db.Save(profile))
                 return Request.CreateResponse(HttpStatusCode.OK);
 
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Erro");

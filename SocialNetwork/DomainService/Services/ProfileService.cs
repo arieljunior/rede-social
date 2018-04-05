@@ -9,39 +9,39 @@ using System.Threading.Tasks;
 
 namespace DomainService.Services
 {
-    public class ProfileService : IService<Profile>
+    public class ProfileService //: IService<Profile>
     {
-        private IRepository<Profile> _profileRepository;
+        //private IRepository<Profile> _profileRepository;
 
-        public ProfileService(IRepository<Profile> profileRepository)
-        {
-            _profileRepository = profileRepository;
-        }
+        //public ProfileService(IRepository<Profile> profileRepository)
+        //{
+        //    _profileRepository = profileRepository;
+        //}
 
-        public bool Create(Profile obj)
-        {
-            return _profileRepository.Save(obj);
+        //public bool Create(Profile obj)
+        //{
+        //    return _profileRepository.Save(obj);
             
-        }
+        //}
 
-        public IEnumerable<Profile> GetAll()
-        {
-            return _profileRepository.GetAll();
-        }
+        //public IEnumerable<Profile> GetAll()
+        //{
+        //    return _profileRepository.GetAll();
+        //}
 
-        public Profile GetById(string id)
-        {
-            return _profileRepository.GetById(id);
-        }
+        //public Profile GetById(string id)
+        //{
+        //    return _profileRepository.GetById(id);
+        //}
 
-        public bool Delete(string id)
-        {
-            return _profileRepository.Remove(id);
-        }
+        //public bool Delete(string id)
+        //{
+        //    return _profileRepository.Remove(id);
+        //}
 
-        public bool UpDate(Profile obj)
-        {
-            return false;//_profileRepository.UpDate(obj);
-        }
+        //public bool UpDate(Profile obj)
+        //{
+        //    return false;//_profileRepository.UpDate(obj);
+        //}
     }
 }

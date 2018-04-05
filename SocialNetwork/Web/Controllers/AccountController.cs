@@ -89,7 +89,8 @@ namespace Web.Controllers
             {
                 case SignInStatus.Success:
                     Session["session_email"] = model.Email;
-                    Session["session_id"] = GetIdAsync(model.Email);
+                    string id = GetId(model.Email).Replace("/","");
+                    Session["session_id"] = id;
 
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -102,16 +103,31 @@ namespace Web.Controllers
                     return View(model);
             }
         }
-        private async Task<string> GetIdAsync(string email)
+        private string GetId(string email)
         {
             string Email = email.Replace(".", "!");
 
-            HttpClient client = new HttpClient();
-            //string url = HttpUtility.UrlEncode(email);
-            //client.BaseAddress = new Uri("http://localhost:51450/"+url);
-            //client.DefaultRequestHeaders.Accept.Add(
-            //    new MediaTypeWithQualityHeaderValue("application/json"));
-            string response = await client.GetStringAsync("http://localhost:51450/api/ProfileGetId/"+Email);
+            //HttpClient client = new HttpClient();
+            ////string url = HttpUtility.UrlEncode(email);
+            ////client.BaseAddress = new Uri("http://localhost:51450/"+url);
+            ////client.DefaultRequestHeaders.Accept.Add(
+            ////    new MediaTypeWithQualityHeaderValue("application/json"));
+            //string response = await client.GetStringAsync("http://localhost:51450/api/ProfileGetId/"+Email);
+
+            //return response;
+
+            string response = null;
+            var requisicaoWeb = WebRequest.CreateHttp("http://localhost:51450/api/ProfileGetId/" + Email);
+            requisicaoWeb.Method = "GET";
+            using (var resposta = requisicaoWeb.GetResponse())
+            {
+                var streamDados = resposta.GetResponseStream();
+                StreamReader reader = new StreamReader(streamDados);
+                object objResponse = reader.ReadToEnd();
+                response = objResponse.ToString();
+                streamDados.Close();
+                resposta.Close();
+            }
 
             return response;
         }

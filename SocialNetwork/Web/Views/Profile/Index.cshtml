@@ -7,9 +7,9 @@
 <div class="jumbotron">
     <div class="image-perfil">
         <figure>
-            <img src="https://journalmetrocom.files.wordpress.com/2017/04/default_profile_400x400.png?w=400&amp;h=400" alt="Imagem relacionada" />
+            <img src="@Model.UrlPhoto" alt="Foto de perfil" />
         </figure>
-        <figcaption>NOME SOBRENOME</figcaption>
+        <figcaption>@Model.Name @Model.LastName</figcaption>
     </div>
 </div>
 
@@ -21,15 +21,14 @@
                 <div class="panel-heading">Dados Pessoais</div>
                 <div class="panel-body">
                     <ul class="list-group">
-                        <li class="list-group-item">Nome: Nome Sobrenome </li>
+                        <li class="list-group-item">Nome: @Model.Name @Model.LastName </li>
                         <li class="list-group-item">Idade: 21</li>
-                        <li class="list-group-item">Cidade: Rio de Janeiro</li>
-                        <li class="list-group-item">Email: email@email.com</li>
-                        <li class="list-group-item">Senha: **************</li>
+                        <li class="list-group-item">Cidade: @Model.City</li>
+                        <li class="list-group-item">Email: @Model.Email</li>
                     </ul>
                 </div>
             </div>
-            <div class="panel panel-default">
+            @*<div class="panel panel-default">
                 <div class="panel-heading">Dados do jogo</div>
                 <div class="panel-body">
                     <ul class="list-group">
@@ -42,7 +41,7 @@
                         <li class="list-group-item">Campeão principal: Oriana</li>
                     </ul>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>

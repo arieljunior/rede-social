@@ -20,17 +20,14 @@ namespace Web.Controllers
         private string UrlApi { get; set; }
         public ProfileController()
         {
-            UrlApi = "http://localhost:51450/api/Profile/";
+            UrlApi = "http://localhost:51450/";
         }
         // GET: Profile
         public ActionResult Index()
         {
-            string id = Session["session_id"].ToString();
+            string id = Session["session_id"].ToString().Replace("\"","").Replace("\\","");
             HttpClient cliente = new HttpClient();
-            Task<HttpResponseMessage> resultado = cliente.GetAsync(UrlApi + id);
-
-            Task<ProfileViewModel> taskProfilesTeste = resultado.Result.Content.ReadAsAsync<ProfileViewModel>();
-            ProfileViewModel ProfileTeste = taskProfilesTeste.Result;
+            Task<HttpResponseMessage> resultado = cliente.GetAsync(UrlApi + "api/Profile/" + id);
 
             Task<Profile> taskProfile = resultado.Result.Content.ReadAsAsync<Profile>();
             Profile Profile = taskProfile.Result;
@@ -40,7 +37,8 @@ namespace Web.Controllers
                 LastName = Profile.LastName,
                 Name = Profile.Name,
                 UrlPhoto = Profile.UrlPhoto,
-                Id = Profile.Id
+                Id = Profile.Id,
+                Email = Session["session_email"].ToString()
             };
 
             return View(ViewProfile);
@@ -65,35 +63,19 @@ namespace Web.Controllers
 
             try
             {
-                string City = data.City != null || !data.City.Equals("") ? data.City : "NÃO INFORMADO";
-                string Photo = data.UrlPhoto != null || !data.UrlPhoto.Equals("") ? data.UrlPhoto : " ";
-                string id = Session["session_id"].ToString().Replace("\"", "");
-                string dadosPOST = $"Name={data.Name}&LastName={data.LastName}&id={id}&Followers=0&Following=0" +
-                    $"&City={City}&UrlPhoto{Photo}";
-                var dados = Encoding.UTF8.GetBytes(dadosPOST);
-                var requisicaoWeb = WebRequest.CreateHttp(UrlApi);
-                requisicaoWeb.Method = "POST";
-                requisicaoWeb.ContentType = "application/x-www-form-urlencoded";
-                requisicaoWeb.ContentLength = dados.Length;
+                data.Id = Guid.Parse(Session["session_id"].ToString().Replace("\"", "").Replace("\\", ""));
 
-                using (var stream = requisicaoWeb.GetRequestStream())
-                {
-                    stream.Write(dados, 0, dados.Length);
-                    stream.Close();
-                }
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(UrlApi);
+                client.DefaultRequestHeaders.Accept.Add(
+                    new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                Task<HttpResponseMessage> response = client.PostAsJsonAsync("api/Profile/", data);
+                if (response.Result.IsSuccessStatusCode)
+                    return RedirectToAction("Index");
 
-                using (var resposta = requisicaoWeb.GetResponse())
-                {
-                    var streamDados = resposta.GetResponseStream();
-                    StreamReader reader = new StreamReader(streamDados);
-                    string objResponse = reader.ReadToEnd();
-                    streamDados.Close();
-                    resposta.Close();
-                }
-
-                return RedirectToAction("Index");
+                return View();
             }
-            catch(Exception ex)
+            catch
             {
                 return View();
             }
