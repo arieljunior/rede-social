@@ -38,6 +38,8 @@ namespace Web.Controllers
                 Name = Profile.Name,
                 UrlPhoto = Profile.UrlPhoto,
                 Id = Profile.Id,
+                Followers = Profile.Followers,
+                Following = Profile.Following,
                 Email = Session["session_email"].ToString()
             };
 

@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Post\PostModel.cs" />
+    <Compile Include="Entities\Post\Post.cs" />
     <Compile Include="Entities\Profile\Profile.cs" />
     <Compile Include="Interfaces\Repositories\IRepository.cs" />
     <Compile Include="Interfaces\Services\IService.cs" />

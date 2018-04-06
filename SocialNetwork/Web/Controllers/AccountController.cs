@@ -89,10 +89,10 @@ namespace Web.Controllers
             {
                 case SignInStatus.Success:
                     Session["session_email"] = model.Email;
-                    string id = GetId(model.Email).Replace("/","");
+                    string id = GetId(model.Email).Replace("\\","").Replace("\"","");
                     Session["session_id"] = id;
 
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("FeedIndex", "Feed");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

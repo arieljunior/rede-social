@@ -2,9 +2,9 @@
 
 namespace DomainModel.Entities.Post
 {
-    public class PostModel
+    public class Post
     {
-        public PostModel()
+        public Post()
         {
             Id = Guid.NewGuid();
         }
@@ -12,7 +12,7 @@ namespace DomainModel.Entities.Post
         public DateTime Date { get; set; }
         public string Message { get; set; }
         public string UrlImage { get; set; }
-        public int IdProfile { get; set; }
+        public Guid IdProfile { get; set; }
         public string Name { get; set; }
 
     }

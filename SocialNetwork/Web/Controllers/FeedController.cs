@@ -1,74 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Web.Models;
+using DomainModel.Entities.Profile;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class FeedController : Controller
     {
-        [Authorize]
+        public string UrlApi { get; set; }
+        public FeedController()
+        {
+            UrlApi = "http://localhost:51450/";
+        }
         // GET: Feed
         public ActionResult FeedIndex()
         {
             string email = Session["session_email"].ToString();
             string id = Session["session_id"].ToString();
-            var myFeed = new FeedViewModel()
+
+            HttpClient cliente = new HttpClient();
+            Task<HttpResponseMessage> resultado = cliente.GetAsync(UrlApi + "api/Profile/" + id);
+
+            Task<Profile> taskProfile = resultado.Result.Content.ReadAsAsync<Profile>();
+
+            var feedView = new FeedViewModel()
             {
-                MyId = Guid.Parse(id),
-                MyName = "Ariel Junior",
-                MyElo = "Platina IV",
-                MyHonors = "Honra 5",
-                Followers = 4,
-                Following = 5,
-                Posts = new List<PostViewModel>()
-                {
-                    new PostViewModel()
-                    {
-                        Name ="Amigo",
-                        Mensage ="Mensagem postada teste",
-                        Elo ="Ouro III",
-                        UrlImage = "https://art-of-lol.com/wp-content/uploads/2015/12/Karthus-League-Of-Legends-Fan-Art-1-360x400.jpg",
-                        Like = 2
-                    },
-                    new PostViewModel()
-                    {
-                        Name ="Amigo2",
-                        Mensage ="Mensagem postada teste2",
-                        Elo ="Diamante V",
-                        UrlImage = "https://br.leagueoflegends.com/sites/default/files/styles/scale_xlarge/public/upload/sion_hextech_splash_final_1.jpg?itok=7kioKbyO",
-                        Like = 4
-                    }
-                }
+                MyName = taskProfile.Result.Name + " " + taskProfile.Result.LastName,
+                MyId = taskProfile.Result.Id,
+                Followers = taskProfile.Result.Followers,
+                Following = taskProfile.Result.Following,
+                MyUrlPhoto = taskProfile.Result.UrlPhoto
             };
 
-            
-            return View(myFeed);
-        }
 
-        // GET: Feed/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Feed/Create
-        public ActionResult Create()
-        {
-            return View();
+            return View(feedView);
         }
 
         // POST: Feed/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult PostMensage(FeedViewModel post)
         {
             try
             {
-                // TODO: Add insert logic here
+                
 
-                return RedirectToAction("Index");
+                return RedirectToAction("FeedIndex");
             }
             catch
             {

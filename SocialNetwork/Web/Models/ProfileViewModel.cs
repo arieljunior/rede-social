@@ -25,7 +25,8 @@ namespace Web.Models
         [Display(Name = "Foto")]
         [DataType(DataType.ImageUrl)]
         public string UrlPhoto { get; set; }
-
+        public int Followers { get; set; }
+        public int Following { get; set; }
         public string Email { get; set; }
     }
 }
