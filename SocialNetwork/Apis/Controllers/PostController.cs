@@ -46,7 +46,7 @@ namespace Apis.Controllers
         // PUT: api/Post/5
         public HttpResponseMessage Put(string id, Post post)
         {
-            post.Id = Guid.Parse(id);
+            post.IdProfile = Guid.Parse(id);
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Dados inválidos");

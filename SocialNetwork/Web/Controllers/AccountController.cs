@@ -92,7 +92,7 @@ namespace Web.Controllers
                     string id = GetId(model.Email).Replace("\\","").Replace("\"","");
                     Session["session_id"] = id;
 
-                    return RedirectToAction("FeedIndex", "Feed");
+                    return RedirectToAction("Index", "Feed");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

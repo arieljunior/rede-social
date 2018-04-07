@@ -14,5 +14,7 @@ namespace Web.Models
         public string UrlImage { get; set; }
         public int Like { get; set; }
         public List<CommentsViewModel> Comments { get; set; }
+        public string IdPost { get; set; }
+        public string IdProfile { get; set; }
     }
 }

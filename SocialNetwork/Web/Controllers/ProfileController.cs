@@ -25,7 +25,7 @@ namespace Web.Controllers
         // GET: Profile
         public ActionResult Index()
         {
-            string id = Session["session_id"].ToString().Replace("\"","").Replace("\\","");
+            string id = Session["session_id"].ToString();
             HttpClient cliente = new HttpClient();
             Task<HttpResponseMessage> resultado = cliente.GetAsync(UrlApi + "api/Profile/" + id);
 
