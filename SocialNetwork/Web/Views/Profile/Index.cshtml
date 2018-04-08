@@ -29,20 +29,23 @@
                     </ul>
                 </div>
             </div>
-            @*<div class="panel panel-default">
-                <div class="panel-heading">Dados do jogo</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Atualizar dados do perfil</div>
                 <div class="panel-body">
-                    <ul class="list-group">
-                        <li class="list-group-item">Jogador: Nome Player </li>
-                        <li class="list-group-item">Level: 35</li>
-                        <li class="list-group-item">Elo atual: Platina IV</li>
-                        <li class="list-group-item">Maestria: 5</li>
-                        <li class="list-group-item">Server: Brasil</li>
-                        <li class="list-group-item">Rota principal: Meio</li>
-                        <li class="list-group-item">Campeão principal: Oriana</li>
-                    </ul>
+                    @using (Html.BeginForm("Edit", "Profile"))
+                    {
+                        <div class="form-group">
+                            <input type="hidden" id="Followers" name="Followers" value="@Model.Followers" />
+                            <input type="hidden" id="Following" name="Following" value="@Model.Following" />
+                            <input type="text" id="Name" name="Name" class="form-control" value="@Model.Name" required/>
+                            <input type="text" id="LastName" name="LastName" class="form-control" value="@Model.LastName" required />
+                            <input type="text" id="City" name="City" value="@Model.City" class="form-control" />
+                            <input type="url" id="UrlPhoto" name="UrlPhoto" value="@Model.UrlPhoto" class="form-control" />
+                        </div>
+                       <button type="submit" class="btn btn-success">Atualizar</button>
+                    }
                 </div>
-            </div>*@
+            </div>
         </div>
     </div>
 </div>

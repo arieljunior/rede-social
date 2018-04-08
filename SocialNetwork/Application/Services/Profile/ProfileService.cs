@@ -1,5 +1,5 @@
 ﻿using Application.Factory.Profile;
-using DomainModel.Entities.Profile;
+using DomainModel.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

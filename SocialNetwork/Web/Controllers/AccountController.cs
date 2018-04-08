@@ -107,15 +107,6 @@ namespace Web.Controllers
         {
             string Email = email.Replace(".", "!");
 
-            //HttpClient client = new HttpClient();
-            ////string url = HttpUtility.UrlEncode(email);
-            ////client.BaseAddress = new Uri("http://localhost:51450/"+url);
-            ////client.DefaultRequestHeaders.Accept.Add(
-            ////    new MediaTypeWithQualityHeaderValue("application/json"));
-            //string response = await client.GetStringAsync("http://localhost:51450/api/ProfileGetId/"+Email);
-
-            //return response;
-
             string response = null;
             var requisicaoWeb = WebRequest.CreateHttp("http://localhost:51450/api/ProfileGetId/" + Email);
             requisicaoWeb.Method = "GET";

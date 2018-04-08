@@ -48,6 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\SocialNetworkContext.cs" />
+    <Compile Include="Migrations\201804080320370_initializeMigrations.cs" />
+    <Compile Include="Migrations\201804080320370_initializeMigrations.Designer.cs">
+      <DependentUpon>201804080320370_initializeMigrations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -55,6 +59,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\FollowRepository.cs" />
     <Compile Include="Repositories\PostRepository.cs" />
     <Compile Include="Repositories\ProfileRepository.cs" />
   </ItemGroup>
@@ -75,6 +80,11 @@
       <Project>{352a4859-7e04-46e7-92d9-07cd8ef05a01}</Project>
       <Name>Web</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201804080320370_initializeMigrations.resx">
+      <DependentUpon>201804080320370_initializeMigrations.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

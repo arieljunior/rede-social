@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
-using DomainModel.Entities.Profile;
+using DomainModel.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

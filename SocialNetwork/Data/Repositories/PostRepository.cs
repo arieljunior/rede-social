@@ -1,6 +1,6 @@
 ﻿using Data.Context;
 using Domain.Interfaces.Repositories;
-using DomainModel.Entities.Post;
+using DomainModel.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

@@ -11,7 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Data.Context;
 using Data.Repositories;
-using DomainModel.Entities.Profile;
+using DomainModel.Entities;
 
 namespace Apis.Controllers
 {

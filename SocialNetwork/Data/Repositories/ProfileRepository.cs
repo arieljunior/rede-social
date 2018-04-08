@@ -1,7 +1,6 @@
 ﻿using Data.Context;
 using Domain.Interfaces.Repositories;
 using DomainModel.Entities;
-using DomainModel.Entities.Profile;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -19,7 +18,6 @@ namespace Data.Repositories
 
         public ProfileRepository(SocialNetworkContext socialNetworkContext)
         {
-
             _socialNetworkContext = socialNetworkContext;
             _dbSet = socialNetworkContext.Set<Profile>();
         }

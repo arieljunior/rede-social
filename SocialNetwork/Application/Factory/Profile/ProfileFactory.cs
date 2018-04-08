@@ -1,6 +1,5 @@
 ﻿using Application.Factory.Interfaces;
-using DomainModel.Entities.Post;
-using DomainModel.Entities.Profile;
+using DomainModel.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

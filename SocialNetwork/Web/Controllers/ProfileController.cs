@@ -1,14 +1,8 @@
-﻿using DomainModel.Entities.Profile;
-using Newtonsoft.Json;
+﻿using DomainModel.Entities;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Web.Models;
 
@@ -39,17 +33,39 @@ namespace Web.Controllers
                 UrlPhoto = Profile.UrlPhoto,
                 Id = Profile.Id,
                 Followers = Profile.Followers,
-                Following = Profile.Following,
-                Email = Session["session_email"].ToString()
+                Following = Profile.Following
+                //Email = Session["session_email"].ToString()
             };
 
             return View(ViewProfile);
         }
 
         // GET: Profile/Details/5
-        public ActionResult Details(int id)
+        public ActionResult AllProfiles()
         {
-            return View();
+            HttpClient cliente = new HttpClient();
+            Task<HttpResponseMessage> resultado = cliente.GetAsync(UrlApi + "api/Profile/");
+            Task<List<Profile>> taskProfiles = resultado.Result.Content.ReadAsAsync<List<Profile>>();
+            var Profiles = new List<ProfileViewModel>();
+
+            foreach(var p in taskProfiles.Result)
+            {
+                var profile = new ProfileViewModel()
+                {
+                    Id = p.Id,
+                    City = p.City,
+                    Email = Session["session_email"].ToString(),
+                    Followers = p.Followers,
+                    Following = p.Following,
+                    LastName = p.LastName,
+                    Name = p.Name,
+                    UrlPhoto = p.UrlPhoto
+                };
+
+                Profiles.Add(profile);
+            }
+
+            return View(Profiles);
         }
 
         // GET: Profile/Create
@@ -62,7 +78,6 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult StepTwoCreate(ProfileViewModel data)
         {
-
             try
             {
                 data.Id = Guid.Parse(Session["session_id"].ToString().Replace("\"", "").Replace("\\", ""));
@@ -83,21 +98,31 @@ namespace Web.Controllers
             }
         }
 
-        // GET: Profile/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Profile/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(ProfileViewModel profile)
         {
             try
             {
-                // TODO: Add update logic here
+                var Profile = new Profile()
+                {
+                    City = profile.City,
+                    Name = profile.Name,
+                    LastName = profile.LastName,
+                    UrlPhoto = profile.UrlPhoto,
+                    Following =  profile.Following,
+                    Followers = profile.Followers
+                };
 
-                return RedirectToAction("Index");
+                string id = Session["session_id"].ToString();
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(UrlApi);
+                client.DefaultRequestHeaders.Accept.Add(
+                    new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                Task<HttpResponseMessage> response = client.PutAsJsonAsync("api/Profile/" + id, Profile);
+                if (response.Result.IsSuccessStatusCode)
+                    return RedirectToAction("Index");
+
+                return View();
             }
             catch
             {

@@ -18,7 +18,7 @@ namespace Web.Models
         [Display(Name = "Sobrenome")]
         public string LastName { get; set; }
 
-        [Display(Name = "Estado/Cidade")]
+        [Display(Name = "Cidade")]
         [StringLength(20, MinimumLength = 2)]
         public string City { get; set; }
 

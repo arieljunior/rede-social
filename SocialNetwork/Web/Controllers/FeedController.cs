@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Web.Models;
-using DomainModel.Entities.Profile;
-using DomainModel.Entities.Post;
+using DomainModel.Entities;
 
 namespace Web.Controllers
 {
@@ -70,7 +69,7 @@ namespace Web.Controllers
             {
                 var Post = new Post()
                 {
-                    Date = DateTime.Today,
+                    Date = DateTime.Now,
                     IdProfile = Guid.Parse(Session["session_id"].ToString()),
                     Message = post.PostMensage,
                     Name = post.MyName
