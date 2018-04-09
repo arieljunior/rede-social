@@ -6,11 +6,11 @@
 
 <h2>Todos Perfis</h2>
 
-@if (Model != null || Model.Count() > 0)
+@if (Model.Count() > 0)
 {
     <div class="row">
-    @foreach (var p in Model)
-    {
+        @foreach (var p in Model)
+        {
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
                     <img src="@p.UrlPhoto" style="width:200px; height:200px;">
@@ -21,13 +21,34 @@
                         <p>Seguindo: @p.Following</p>
                         <p>Seguidores: @p.Followers</p>
                         <p>
-                            <a href="" class="btn btn-primary" role="button">Ver Perfil</a> 
-                            <a href="" class="btn btn-default" role="button">Seguir</a>
+                            @if (!p.IsFollowed)
+                            {
+                                using (Html.BeginForm("FollowUp", "Follow", method: FormMethod.Post))
+                                {
+                                    <input type="hidden" id="IdFollower" name="IdFollower" value="@Session["session_id"].ToString()" />
+                                    <input type="hidden" id="IdFollowed" name="IdFollowed" value="@p.Id" />
+                                    <input type="hidden" id="Url" name="Url" value="@HttpContext.Current.Request.Url" />
+                                    <button type="submit" class="btn btn-info">Seguir</button>
+                                }
+                            }
+                            else
+                            {
+                                using (Html.BeginForm("UnFollow", "Follow", method: FormMethod.Post))
+                                {
+                                    <input type="hidden" id="IdFollower" name="IdFollower" value="@Session["session_id"].ToString()" />
+                                    <input type="hidden" id="IdFollowed" name="IdFollowed" value="@p.Id" />
+                                    <input type="hidden" id="Url" name="Url" value="@HttpContext.Current.Request.Url" />
+                                    <button type="submit" class="btn btn-danger">Deixar de seguir</button>
+                                }
+                            }
+
+                            @*<a href="#/Profile/DetailsProfile/@p.Id" class="btn btn-primary" role="button">Ver Perfil</a>*@
+                            @Html.ActionLink("Ver Perfil", "DetailsProfile/" + p.Id, "Profile/", new { @class = "btn btn-primary" })
                         </p>
                     </div>
                 </div>
             </div>
-    }
+        }
     </div>
 }
 else

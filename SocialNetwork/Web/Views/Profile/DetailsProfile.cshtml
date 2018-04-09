@@ -1,0 +1,100 @@
+﻿@model Web.Models.ProfileViewModel
+
+@{
+    ViewBag.Title = "DetailsProfile";
+}
+
+<h2>DetailsProfile</h2>
+
+<div>
+    <h4>ProfileViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UrlPhoto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UrlPhoto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Followers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Followers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Following)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Following)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsFollowed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsFollowed)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (!Model.IsFollowed)
+    {
+        using (Html.BeginForm("FollowUp", "Follow", method: FormMethod.Post))
+        {
+            <input type="hidden" id="IdFollower" name="IdFollower" value="@Session["session_id"].ToString()" />
+            <input type="hidden" id="IdFollowed" name="IdFollowed" value="@Model.Id" />
+            <input type="hidden" id="Url" name="Url" value="@HttpContext.Current.Request.Url" />
+            <button type="submit" class="btn btn-default">Seguir</button>
+        }
+    }
+    else
+    {
+        using (Html.BeginForm("UnFollow", "Follow", method: FormMethod.Post))
+        {
+            <input type="hidden" id="IdFollower" name="IdFollower" value="@Session["session_id"].ToString()" />
+            <input type="hidden" id="IdFollowed" name="IdFollowed" value="@Model.Id" />
+            <input type="hidden" id="Url" name="Url" value="@HttpContext.Current.Request.Url" />
+            <button type="submit" class="btn btn-danger">Deixar de seguir</button>
+        }
+    }
+</p>

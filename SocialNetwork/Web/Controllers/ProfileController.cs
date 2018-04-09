@@ -1,4 +1,5 @@
 ﻿using DomainModel.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -33,9 +34,40 @@ namespace Web.Controllers
                 UrlPhoto = Profile.UrlPhoto,
                 Id = Profile.Id,
                 Followers = Profile.Followers,
-                Following = Profile.Following
-                //Email = Session["session_email"].ToString()
+                Following = Profile.Following,
+                Email = Profile.Email
             };
+
+            return View(ViewProfile);
+        }
+
+        public ActionResult DetailsProfile(string id)
+        {
+            HttpClient cliente = new HttpClient();
+            Task<HttpResponseMessage> resultado = cliente.GetAsync(UrlApi + "api/Profile/" + id);
+
+            Task<Profile> taskProfile = resultado.Result.Content.ReadAsAsync<Profile>();
+            Profile Profile = taskProfile.Result;
+            var ViewProfile = new ProfileViewModel()
+            {
+                City = Profile.City,
+                LastName = Profile.LastName,
+                Name = Profile.Name,
+                UrlPhoto = Profile.UrlPhoto,
+                Id = Profile.Id,
+                Followers = Profile.Followers,
+                Following = Profile.Following,
+                Email = Profile.Email,
+            };
+
+            Task<HttpResponseMessage> ResultFollowing = cliente.GetAsync(UrlApi + "api/Following/" + Session["session_id"].ToString());
+            Task<List<string>> taskFollowing = ResultFollowing.Result.Content.ReadAsAsync<List<string>>();
+
+            foreach(var f in taskFollowing.Result)
+            {
+                if (f.ToString().Equals(ViewProfile.Id.ToString()))
+                    ViewProfile.IsFollowed = true;
+            }
 
             return View(ViewProfile);
         }
@@ -44,25 +76,41 @@ namespace Web.Controllers
         public ActionResult AllProfiles()
         {
             HttpClient cliente = new HttpClient();
+
+            //Pega todos os perfis cadastrados no banco
             Task<HttpResponseMessage> resultado = cliente.GetAsync(UrlApi + "api/Profile/");
             Task<List<Profile>> taskProfiles = resultado.Result.Content.ReadAsAsync<List<Profile>>();
             var Profiles = new List<ProfileViewModel>();
 
-            foreach(var p in taskProfiles.Result)
+            foreach (var p in taskProfiles.Result)
             {
-                var profile = new ProfileViewModel()
+                if (!p.Id.ToString().Equals(Session["session_id"].ToString()))
                 {
-                    Id = p.Id,
-                    City = p.City,
-                    Email = Session["session_email"].ToString(),
-                    Followers = p.Followers,
-                    Following = p.Following,
-                    LastName = p.LastName,
-                    Name = p.Name,
-                    UrlPhoto = p.UrlPhoto
-                };
+                    var profile = new ProfileViewModel()
+                    {
+                        Id = p.Id,
+                        City = p.City,
+                        Email = p.Email,
+                        Followers = p.Followers,
+                        Following = p.Following,
+                        LastName = p.LastName,
+                        Name = p.Name,
+                        UrlPhoto = p.UrlPhoto
+                    };
 
-                Profiles.Add(profile);
+                    Profiles.Add(profile);
+                }
+            }
+
+            //Verifica quais desses perfis o usuário logado segue
+            Task<HttpResponseMessage> ResultFollowwing = cliente.GetAsync(UrlApi + "api/Following/" + Session["session_id"].ToString());
+            Task<List<string>> taskFollowing = ResultFollowwing.Result.Content.ReadAsAsync<List<string>>();
+
+            foreach (var f in taskFollowing.Result)
+            {
+                foreach (var p in Profiles)
+                    if (f.Equals(p.Id.ToString()))
+                        p.IsFollowed = true;
             }
 
             return View(Profiles);
@@ -81,6 +129,7 @@ namespace Web.Controllers
             try
             {
                 data.Id = Guid.Parse(Session["session_id"].ToString().Replace("\"", "").Replace("\\", ""));
+                data.Email = Session["session_email"].ToString();
 
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(UrlApi);

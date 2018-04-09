@@ -22,6 +22,32 @@ namespace Data.Repositories
             _dbSet = socialNetworkContext.Set<Profile>();
         }
 
+        public bool FollowUp(Guid idProfileFollowed, Guid idProfileFollower)
+        {
+            var followed = _dbSet.Find(idProfileFollowed);
+            followed.Followers++;
+
+            var follower = _dbSet.Find(idProfileFollower);
+            follower.Following++;
+
+            if (UpDate(followed) && UpDate(follower))
+                return true;
+
+            return false;
+        }
+        public bool FollowDown(Guid idProfileFollowed, Guid idProfileFollower)
+        {
+            var followed = _dbSet.Find(idProfileFollowed);
+            followed.Followers--;
+
+            var follower = _dbSet.Find(idProfileFollower);
+            follower.Following--;
+
+            if (UpDate(followed) && UpDate(follower))
+                return true;
+
+            return false;
+        }
         public IEnumerable<Profile> GetAll()
         {
             return _dbSet;

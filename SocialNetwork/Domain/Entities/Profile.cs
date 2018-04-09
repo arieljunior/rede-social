@@ -12,5 +12,6 @@ namespace DomainModel.Entities
         public string LastName { get; set; }
         public string UrlPhoto { get; set; }
         public string City { get; set; }
+        public string Email { get; set; }
     }
 }

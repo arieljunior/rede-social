@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
+    <Compile Include="Controllers\FollowController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -272,6 +273,7 @@
     <Content Include="Views\Profile\StepTwoCreate.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Profile\AllProfiles.cshtml" />
+    <Content Include="Views\Profile\DetailsProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

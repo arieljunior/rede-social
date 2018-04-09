@@ -25,8 +25,11 @@ namespace Web.Models
         [Display(Name = "Foto")]
         [DataType(DataType.ImageUrl)]
         public string UrlPhoto { get; set; }
+
         public int Followers { get; set; }
         public int Following { get; set; }
         public string Email { get; set; }
+
+        public bool IsFollowed { get; set; } // Variável para verificar se o usuário logado está seguindo outro usuário na view
     }
 }

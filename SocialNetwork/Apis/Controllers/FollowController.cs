@@ -13,10 +13,12 @@ namespace Apis.Controllers
     public class FollowController : ApiController
     {
         private FollowRepository db;
+        private ProfileRepository dbProfile;
 
         public FollowController()
         {
             db = new FollowRepository(new SocialNetworkContext());
+            dbProfile = new ProfileRepository(new SocialNetworkContext());
         }
 
         // GET: api/Follow
@@ -60,26 +62,36 @@ namespace Apis.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Dados inválidos");
             }
 
-            if(db.Exist(value.IdFollower, value.IdFollowed) != null)
+            if(db.FindFollow(value.IdFollower, value.IdFollowed) != null)
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Já existe uma relação");
 
             if (db.Save(value))
-                return Request.CreateResponse(HttpStatusCode.OK);
+            {
+                if(dbProfile.FollowUp(value.IdFollowed, value.IdFollower))
+                    return Request.CreateResponse(HttpStatusCode.OK);
+
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Não foi possível incrementar \"seguidores\" ou \"seguindo\"");
+            }
+
 
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Erro");
         }
 
         // DELETE: api/Follow/5
-        public HttpResponseMessage Delete(string id)
+        public HttpResponseMessage Delete(string IdFollowed, string IdFollower)
         {
-            Follow follow = db.GetById(Guid.Parse(id));
+            var follow = db.FindFollow(Guid.Parse(IdFollower), Guid.Parse(IdFollowed));
             if (follow == null)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Não encontrado");
             }
 
             if (db.Remove(follow))
+            {
+                dbProfile.FollowDown(follow.IdFollowed, follow.IdFollower);
+
                 return Request.CreateResponse(HttpStatusCode.OK);
+            }
 
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Erro");
         }

@@ -9,7 +9,7 @@ namespace Data.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Data.Context.SocialNetworkContext context)

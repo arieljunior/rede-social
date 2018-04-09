@@ -30,6 +30,18 @@ namespace Data.Repositories
         {
             return _dbSet.Find(id);
         }
+        public Follow FindFollow(Guid idProfileFollower, Guid idProfileFollowed)
+        {
+            try
+            {
+                var follow = _dbSet.Where(f => f.IdFollower == idProfileFollower && f.IdFollowed == idProfileFollowed).First();
+                return follow;
+            }
+            catch
+            {
+                return null;
+            }
+        }
         public IEnumerable<Follow> GetFollowing(Guid idFollower)
         {
             return _dbSet.Where(c => c.IdFollower == idFollower).ToList();
@@ -38,13 +50,6 @@ namespace Data.Repositories
         public IEnumerable<Follow> GetFollowers(Guid Followed)
         {
             return _dbSet.Where(c => c.IdFollowed == Followed).ToList();
-        }
-
-        public Follow Exist(Guid idFollower, Guid idFollowed)
-        {
-            var y = _dbSet.Where(c => c.IdFollowed == idFollowed && c.IdFollower == idFollower).ToList();
-            var x = _dbSet.Where(c => c.IdFollowed == idFollowed && c.IdFollower == idFollower).FirstOrDefault();
-            return _dbSet.Where(c => c.IdFollowed == idFollowed && c.IdFollower == idFollower).FirstOrDefault();
         }
 
         public bool Remove(Follow obj)
