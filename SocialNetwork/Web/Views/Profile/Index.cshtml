@@ -11,7 +11,11 @@
         </figure>
         <figcaption>@Model.Name @Model.LastName</figcaption>
     </div>
-    
+    @using (Html.BeginForm("UploadPhoto", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="data" multiple />
+        <button type="submit" class="btn btn-default">Atualizar foto de perfil</button>
+    }
 </div>
 <h3>Seguindo: @Model.Following  Seguidores: @Model.Followers</h3>
 <div class="row">

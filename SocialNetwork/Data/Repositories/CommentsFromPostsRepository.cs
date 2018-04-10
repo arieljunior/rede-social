@@ -1,6 +1,6 @@
 ﻿using Data.Context;
+using Domain.Entities;
 using Domain.Interfaces.Repositories;
-using DomainModel.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,30 +10,42 @@ using System.Threading.Tasks;
 
 namespace Data.Repositories
 {
-    public class PostRepository : IRepository<Post>
+    public class CommentsFromPostsRepository : IRepository<CommentsFromPost>
     {
         private SocialNetworkContext _socialNetworkContext;
-        private DbSet<Post> _dbSet;
+        private DbSet<CommentsFromPost> _dbSet;
 
-        public PostRepository(SocialNetworkContext socialNetworkContext)
+        public CommentsFromPostsRepository(SocialNetworkContext socialNetworkContext)
         {
             _socialNetworkContext = socialNetworkContext;
-            _dbSet = _socialNetworkContext.Set<Post>();
+            _dbSet = socialNetworkContext.Set<CommentsFromPost>();
         }
 
-        public IEnumerable<Post> GetAll()
+        public IEnumerable<CommentsFromPost> GetAll()
         {
             return _dbSet;
         }
 
-        public Post GetById(Guid id)
+        public CommentsFromPost GetById(Guid idComment)
         {
-            return _dbSet.Find(id);
+            return _dbSet.Find(idComment);
         }
 
-        public bool Remove(Post obj)
+        public IEnumerable<CommentsFromPost> GetCommentsFromPost(Guid idPost)
         {
+            try
+            {
+                var value = _dbSet.Where(c => c.IdPost == idPost).ToList();
+                return value;
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
+        public bool Remove(CommentsFromPost obj)
+        {
             try
             {
                 _dbSet.Remove(obj);
@@ -46,7 +58,7 @@ namespace Data.Repositories
             }
         }
 
-        public bool Save(Post obj)
+        public bool Save(CommentsFromPost obj)
         {
             try
             {
@@ -60,7 +72,7 @@ namespace Data.Repositories
             }
         }
 
-        public bool UpDate(Post obj)
+        public bool UpDate(CommentsFromPost obj)
         {
             try
             {

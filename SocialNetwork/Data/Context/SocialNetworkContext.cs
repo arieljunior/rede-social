@@ -1,4 +1,5 @@
-﻿using DomainModel.Entities;
+﻿using Domain.Entities;
+using DomainModel.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,7 +18,9 @@ namespace Data.Context
 
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Post> Posts { get; set; }
-        public DbSet<Follow> MyProperty { get; set; }
+        public DbSet<Follow> Follows { get; set; }
+        public DbSet<CommentsFromPost> CommentsFromPosts { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

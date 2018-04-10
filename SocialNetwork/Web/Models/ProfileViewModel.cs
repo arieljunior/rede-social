@@ -22,10 +22,7 @@ namespace Web.Models
         [StringLength(20, MinimumLength = 2)]
         public string City { get; set; }
 
-        [Display(Name = "Foto")]
-        [DataType(DataType.ImageUrl)]
         public string UrlPhoto { get; set; }
-
         public int Followers { get; set; }
         public int Following { get; set; }
         public string Email { get; set; }

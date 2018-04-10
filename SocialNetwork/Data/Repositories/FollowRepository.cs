@@ -74,7 +74,7 @@ namespace Data.Repositories
                 _socialNetworkContext.SaveChanges();
                 return true;
             }
-            catch(Exception ex)
+            catch
             {
                 return false;
             }

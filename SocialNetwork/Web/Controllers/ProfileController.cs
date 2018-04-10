@@ -1,9 +1,10 @@
 ﻿using DomainModel.Entities;
-
+using StorageService;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using Web.Models;
 
@@ -128,14 +129,30 @@ namespace Web.Controllers
         {
             try
             {
-                data.Id = Guid.Parse(Session["session_id"].ToString().Replace("\"", "").Replace("\\", ""));
-                data.Email = Session["session_email"].ToString();
+                //BlobService blob = new BlobService();
+                //string url = blob.UploadImage("imagesProfile",data.UploadFoto.FileName, data.UploadFoto.InputStream,
+                //    data.UploadFoto.ContentType);
+
+                //data.Id = Guid.Parse(Session["session_id"].ToString().Replace("\"", "").Replace("\\", ""));
+                //data.Email = Session["session_email"].ToString();
+
+                var profile = new Profile()
+                {
+                    City = data.City,
+                    Email = Session["session_email"].ToString(),
+                    Followers = 0,
+                    Following = 0,
+                    Name = data.Name,
+                    LastName = data.LastName,
+                    Id = Guid.Parse(Session["session_id"].ToString()),
+                    UrlPhoto = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"
+                };
 
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(UrlApi);
                 client.DefaultRequestHeaders.Accept.Add(
                     new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                Task<HttpResponseMessage> response = client.PostAsJsonAsync("api/Profile/", data);
+                Task<HttpResponseMessage> response = client.PostAsJsonAsync("api/Profile/", profile);
                 if (response.Result.IsSuccessStatusCode)
                     return RedirectToAction("Index");
 
@@ -179,23 +196,20 @@ namespace Web.Controllers
             }
         }
 
-        // GET: Profile/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         // POST: Profile/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult UploadPhoto(HttpPostedFileBase data)
         {
             try
             {
-                // TODO: Add delete logic here
+                BlobService blob = new BlobService();
+                string url = blob.UploadImage("LeagueBookImagesProfile", Guid.NewGuid().ToString(), data.InputStream,
+                    data.ContentType);
 
-                return RedirectToAction("Index");
+
+                return View();
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }

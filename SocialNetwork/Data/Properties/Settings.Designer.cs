@@ -35,5 +35,17 @@ namespace Data.Properties {
                 return ((string)(this["DbConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("DefaultEndpointsProtocol=https;AccountName=infnetstorage;AccountKey=Z1iCH2IJs9I3X" +
+            "PBocnRNlqB6qVHrqGCu5j+iL/94259SS7WxnoHr8RkLKHjknT+WUv6bN45GamWawJNUzmpS8A==;Endp" +
+            "ointSuffix=core.windows.net")]
+        public string BlobConnectionString {
+            get {
+                return ((string)(this["BlobConnectionString"]));
+            }
+        }
     }
 }

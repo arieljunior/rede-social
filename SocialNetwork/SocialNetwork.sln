@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apis", "Apis\Apis.csproj", "{DBC9A38C-9B63-4317-A3F8-A6CF161D5DDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageService", "StorageService\StorageService.csproj", "{9FE55F37-DD2E-4C80-8C5C-A906515B90E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{DBC9A38C-9B63-4317-A3F8-A6CF161D5DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBC9A38C-9B63-4317-A3F8-A6CF161D5DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBC9A38C-9B63-4317-A3F8-A6CF161D5DDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FE55F37-DD2E-4C80-8C5C-A906515B90E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FE55F37-DD2E-4C80-8C5C-A906515B90E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FE55F37-DD2E-4C80-8C5C-A906515B90E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FE55F37-DD2E-4C80-8C5C-A906515B90E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{5AF2CAAD-C53E-4303-AC33-6FD0F21E4515} = {91A47D8F-358F-40FB-8A5F-94D39132594D}
 		{352A4859-7E04-46E7-92D9-07CD8EF05A01} = {9603B84C-016C-48E2-B2EB-469A4E1D4A97}
 		{DBC9A38C-9B63-4317-A3F8-A6CF161D5DDC} = {E4166B1D-9D4C-415C-B79D-81B16647FB51}
+		{9FE55F37-DD2E-4C80-8C5C-A906515B90E0} = {E4166B1D-9D4C-415C-B79D-81B16647FB51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B5353154-662B-4A79-A89A-B54B5CE8A127}

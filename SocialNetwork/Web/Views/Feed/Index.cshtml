@@ -23,7 +23,7 @@
         @using (Html.BeginForm("PostMensage", "Feed"))
         {
             @Html.AntiForgeryToken()
-            <input type="hidden" id="MyName" name="MyName" value="@Model.MyName"/>
+            <input type="hidden" id="MyName" name="MyName" value="@Model.MyName" />
             <div class="form-group">
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.PostMensage, new { htmlAttributes = new { @class = "form-control" } })
@@ -38,42 +38,91 @@
     </div>
     <div class="col-lg-7">
         @if (Model.Posts != null || Model.Posts.Count() > 0)
-    {
-        foreach (var p in Model.Posts)
         {
-        <ul class="list-group">
-            <li class="list-group-item">@p.Name</li>
-            <li class="list-group-item">Postado: @p.DatePosted</li>
-            <li class="list-group-item">Curtidas: @p.Like</li>
-            <li class="list-group-item">@p.Mensage</li>
-            @if (Session["session_id"].ToString().ToUpper().Equals(p.IdProfile.ToUpper()))
+            foreach (var p in Model.Posts)
             {
-                using (Html.BeginForm("Edit", "Feed"))
-                {
-                    @Html.AntiForgeryToken()
-                    <input id="IdPost" name="IdPost" type="hidden" value="@p.IdPost" />
-                    <input id="Name" name="Name" type="hidden" value="@p.Name" />
-                    <input id="DatePosted" name="DatePosted" type="hidden" value="@p.DatePosted" />
-                    <div class="form-group">
-                        <div class="form-control">
-                            <input type="text" id="Mensage" name="Mensage" value="@p.Mensage" required />
-                            <input type="submit" class="btn btn-info" value="Editar" />
-                        </div>
-                    </div>
-                }
+                <ul class="list-group">
+                    <li class="list-group-item">@p.Name</li>
+                    <li class="list-group-item">Postado: @p.DatePosted</li>
+                    <li class="list-group-item">Curtidas: @p.Like</li>
+                    <li class="list-group-item">@p.Mensage</li>
+                    @if (Session["session_id"].ToString().ToUpper().Equals(p.IdProfile.ToUpper()))
+                    {
+                        <li class="list-group-item">
+                            @using (Html.BeginForm("EditPost", "Feed"))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input id="IdPost" name="IdPost" type="hidden" value="@p.IdPost" />
+                                <input id="Name" name="Name" type="hidden" value="@p.Name" />
+                                <input id="DatePosted" name="DatePosted" type="hidden" value="@p.DatePosted" />
+                                <input type="text" class="form-control" name="Mensage" value="@p.Mensage" required />
+                                <input type="submit" class="btn btn-info" value="Editar" />
+                                
+                            }
+                        </li>
+                    }
+                    @if (p.UrlImage != null)
+                    {
+                        <li class="list-group-item">
+                            <img src="@p.UrlImage" style="width:200px;height:200px;" />
+                        </li>
+                    }
+
+                    @if(p.Comments != null && p.Comments.Count() > 0)
+                    {
+                        <li class="list-group-item">
+                            @foreach(var c in p.Comments)
+                            {
+                                if (c.IdProfile.ToString().ToUpper().Equals(Session["session_id"].ToString().ToUpper()))
+                                {
+                                    <ol class="list-group col-md-10" style="display: contents;">
+                                        <li class="list-group-item">@c.Name</li>
+                                        <li class="list-group-item">@c.Date</li>
+                                        <li class="list-group-item">@c.Comment</li>
+                                        <li class="list-group-item">
+                                            @using (Html.BeginForm("EditComment", "Feed"))
+                                            {
+                                                <input type="hidden" name="IdComment" value="@c.Id"/>
+                                                <input type="hidden" name="IdPost" value="@p.IdPost" />
+                                                <input type="hidden" name="IdProfile" value="@c.IdProfile" />
+                                                <input type="hidden" name="Name" value="@Model.MyName" />
+                                                <input type="hidden" name="url" value="@HttpContext.Current.Request.Url" />
+                                                <input type="text" name="comment" class="form-control" value="@c.Comment" required />
+                                                <button class="btn btn-warning" type="submit">Editar Comentario</button>
+                                            }
+                                        </li>
+                                    </ol>
+
+                                }
+                                else
+                                {
+                                    <ol class="list-group col-md-10" style="display: contents;">
+                                        <li class="list-group-item">@c.Name</li>
+                                        <li class="list-group-item">@c.Date</li>
+                                        <li class="list-group-item">@c.Comment</li>
+                                    </ol>
+                                }
+                            }
+                        </li>
+                    }
+                        <li class="list-group-item">
+                            @using (Html.BeginForm("PostComment", "Feed"))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" id="IdPost" name="IdPost" value="@p.IdPost" />
+                                <input type="hidden" id="IdProfile" name="IdProfile" value="@Session["session_id"].ToString()" />
+                                <input type="hidden" id="Name" name="Name" value="@Model.MyName" />
+                                <input type="hidden" id="url" name="url" value="@HttpContext.Current.Request.Url" />
+                                <input type="text" name="comment" class="form-control" required />
+                                <button class="btn btn-default" type="submit">Comentar</button>
+                            }
+                        </li>
+                </ul>
             }
-            @if (p.UrlImage != null)
-            {
-                <li class="list-group-item">
-                    <img src="@p.UrlImage" style="width:200px;height:200px;" />
-                </li>
-            }
-        </ul>
         }
-    }
-    else
-    {
-        <h3>Nenhuma postagem</h3>
-    }
+        else
+        {
+            <h3>Nenhuma postagem</h3>
+        }
     </div>
 </section>

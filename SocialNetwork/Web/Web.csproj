@@ -296,6 +296,13 @@
       <Project>{6FAE4AFA-EC57-42DE-B4DE-8CF126A3EFFF}</Project>
       <Name>DomainModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StorageService\StorageService.csproj">
+      <Project>{9fe55f37-dd2e-4c80-8c5c-a906515b90e0}</Project>
+      <Name>StorageService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
