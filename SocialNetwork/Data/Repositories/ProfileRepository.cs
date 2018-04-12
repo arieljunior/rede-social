@@ -115,6 +115,12 @@ namespace Data.Repositories
         {
             try
             {
+                PostRepository p = new PostRepository(new SocialNetworkContext());
+                CommentsFromPostsRepository c = new CommentsFromPostsRepository(new SocialNetworkContext());
+
+                p.UpdatePhoto(profile.Id, profile.UrlPhoto);
+                c.UpdatePhoto(profile.Id, profile.UrlPhoto);
+
                 _socialNetworkContext.Entry(profile).State = EntityState.Modified;
                 _socialNetworkContext.SaveChanges();
                 return true;

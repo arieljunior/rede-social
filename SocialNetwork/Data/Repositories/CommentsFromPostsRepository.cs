@@ -58,6 +58,46 @@ namespace Data.Repositories
             }
         }
 
+        public bool UpdatePhoto(Guid idProfile, string urlPhoto)
+        {
+            try
+            {
+                var comments = _dbSet.Where(c => c.IdProfile == idProfile).ToList();
+                for (var count = 0; count < comments.Count(); count++)
+                {
+                    comments[count].UrlPhoto = urlPhoto;
+                    _socialNetworkContext.Entry(comments[count]).State = EntityState.Modified;
+                }
+                _socialNetworkContext.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveCommentsFromPost(Guid idPsot)
+        {
+            try
+            {
+                var ListComments =_dbSet.Where(c => c.IdPost == idPsot).ToList();
+
+                for(var count = 0; count < ListComments.Count(); count++)
+                {
+                    _dbSet.Remove(ListComments[count]);
+                }
+
+                _socialNetworkContext.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public bool Save(CommentsFromPost obj)
         {
             try
@@ -78,6 +118,7 @@ namespace Data.Repositories
             {
                 _socialNetworkContext.Entry(obj).State = EntityState.Modified;
                 _socialNetworkContext.SaveChanges();
+                UpdatePhoto(obj.IdProfile, obj.UrlPhoto);
                 return true;
             }
             catch

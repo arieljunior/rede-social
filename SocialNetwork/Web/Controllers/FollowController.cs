@@ -56,8 +56,8 @@ namespace Web.Controllers
                 };
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(UrlApi);
-                client.DefaultRequestHeaders.Accept.Add(
-                    new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                //client.DefaultRequestHeaders.Accept.Add(
+                //    new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 Task<HttpResponseMessage> response = client.DeleteAsync($"api/Follow?IdFollowed={IdFollowed}&IdFollower={IdFollower}");
                 if (response.Result.IsSuccessStatusCode)
                     return Redirect(Url);

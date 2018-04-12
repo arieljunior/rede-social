@@ -13,5 +13,6 @@ namespace Web.Models
         public Guid Id { get; set; }
         public Guid IdProfile { get; set; }
         public Guid IdPost { get; set; }
+        public string UrlPhoto { get; set; }
     }
 }

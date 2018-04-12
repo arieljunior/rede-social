@@ -16,5 +16,6 @@ namespace Web.Models
         public List<CommentsViewModel> Comments { get; set; }
         public string IdPost { get; set; }
         public string IdProfile { get; set; }
+        public string UrlPhotoAutor { get; set; }
     }
 }

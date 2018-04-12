@@ -18,5 +18,6 @@ namespace Domain.Entities
         public string Comment { get; set; }
         public DateTime DateComment { get; set; }
         public string Name { get; set; }
+        public string UrlPhoto { get; set; }
     }
 }

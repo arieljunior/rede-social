@@ -68,7 +68,8 @@ namespace Web.Controllers
                         Name = post.Name,
                         UrlImage = post.UrlImage,
                         IdPost = post.Id.ToString(),
-                        IdProfile = post.IdProfile.ToString()
+                        IdProfile = post.IdProfile.ToString(),
+                        UrlPhotoAutor = post.UrlPhotoAutor
                     };
 
                     if (taskComments.Result != null && taskComments.Result.Count() >0)
@@ -86,7 +87,8 @@ namespace Web.Controllers
                                     Id = comment.Id,
                                     IdProfile = comment.IdProfile,
                                     IdPost = comment.IdPost,
-                                    Name = comment.Name
+                                    Name = comment.Name,
+                                    UrlPhoto = comment.UrlPhoto
                                 };
                                 Comments.Add(Comment);
                             }
@@ -109,7 +111,8 @@ namespace Web.Controllers
                                 Name = post.Name,
                                 UrlImage = post.UrlImage,
                                 IdPost = post.Id.ToString(),
-                                IdProfile = post.IdProfile.ToString()
+                                IdProfile = post.IdProfile.ToString(),
+                                UrlPhotoAutor = post.UrlPhotoAutor
                             };
 
                             if(taskComments.Result != null && taskComments.Result.Count() > 0)
@@ -128,7 +131,8 @@ namespace Web.Controllers
                                             Id = comment.Id,
                                             IdProfile = comment.IdProfile,
                                             IdPost = comment.IdPost,
-                                            Name = comment.Name
+                                            Name = comment.Name,
+                                            UrlPhoto = comment.UrlPhoto
                                         };
                                         Comments.Add(Comment);   
                                     }
@@ -149,7 +153,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostComment(string url, string comment, string IdPost, string IdProfile, string Name)
+        public ActionResult PostComment(string urlPhoto, string url, string comment, string IdPost, string IdProfile, string Name)
         {
             try
             {
@@ -159,7 +163,8 @@ namespace Web.Controllers
                     IdPost = Guid.Parse(IdPost),
                     IdProfile = Guid.Parse(IdProfile),
                     DateComment = DateTime.Now,
-                    Name = Name
+                    Name = Name,
+                    UrlPhoto = urlPhoto
                 };
                 
                 
@@ -178,7 +183,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditComment(string url, string idComment,string idProfile, string idPost, string comment, string name)
+        public ActionResult EditComment(string url, string idComment,string idProfile, string idPost, string comment, string name, string urlPhoto)
         {
             try
             {
@@ -189,7 +194,8 @@ namespace Web.Controllers
                     DateComment = DateTime.Now,
                     IdPost = Guid.Parse(idPost),
                     IdProfile = Guid.Parse(idProfile),
-                    Name = name
+                    Name = name,
+                    UrlPhoto = urlPhoto
                 };
 
                 _client.DefaultRequestHeaders.Accept.Add(
@@ -215,7 +221,8 @@ namespace Web.Controllers
                     Date = DateTime.Now,
                     IdProfile = Guid.Parse(Session["session_id"].ToString()),
                     Message = post.PostMensage,
-                    Name = post.MyName
+                    Name = post.MyName,
+                    UrlPhotoAutor = post.MyUrlPhoto
                     //UrlImage = post.UrlPostImage,
                 };
 
@@ -244,7 +251,8 @@ namespace Web.Controllers
                     Id = Guid.Parse(value.IdPost),
                     Message = value.Mensage,
                     Name = value.Name,
-                    Date = value.DatePosted
+                    Date = value.DatePosted,
+                    UrlPhotoAutor = value.UrlPhotoAutor
                 };
                 string id = Session["session_id"].ToString();
 
@@ -268,13 +276,32 @@ namespace Web.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                Task<HttpResponseMessage> response = _client.DeleteAsync($"api/Post?Id={idPost}");
+                if (response.Result.IsSuccessStatusCode)
+                    return RedirectToAction("Index");
 
                 return RedirectToAction("Index");
             }
             catch
             {
                 return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteComment(string idComment)
+        {
+            try
+            {
+                Task<HttpResponseMessage> response = _client.DeleteAsync($"api/CommentsFromPost?Id={idComment}");
+                if (response.Result.IsSuccessStatusCode)
+                    return RedirectToAction("Index");
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
             }
         }
     }

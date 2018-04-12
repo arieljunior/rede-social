@@ -125,16 +125,13 @@ namespace Web.Controllers
 
         // POST: Profile/Create
         [HttpPost]
-        public ActionResult StepTwoCreate(ProfileViewModel data)
+        public ActionResult StepTwoCreate(ProfileViewModel data, HttpPostedFileBase img)
         {
             try
             {
-                //BlobService blob = new BlobService();
-                //string url = blob.UploadImage("imagesProfile",data.UploadFoto.FileName, data.UploadFoto.InputStream,
-                //    data.UploadFoto.ContentType);
-
-                //data.Id = Guid.Parse(Session["session_id"].ToString().Replace("\"", "").Replace("\\", ""));
-                //data.Email = Session["session_email"].ToString();
+                BlobService blob = new BlobService();
+                string urlImage = blob.UploadImage("ariel", Guid.NewGuid().ToString(), img.InputStream,
+                    img.ContentType);
 
                 var profile = new Profile()
                 {
@@ -145,7 +142,7 @@ namespace Web.Controllers
                     Name = data.Name,
                     LastName = data.LastName,
                     Id = Guid.Parse(Session["session_id"].ToString()),
-                    UrlPhoto = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"
+                    UrlPhoto = urlImage
                 };
 
                 HttpClient client = new HttpClient();
@@ -165,16 +162,20 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(ProfileViewModel profile)
+        public ActionResult Edit(ProfileViewModel profile, HttpPostedFileBase img)
         {
             try
             {
+                BlobService blob = new BlobService();
+                string url = blob.UploadImage("ariel", Guid.NewGuid().ToString(), img.InputStream,
+                    img.ContentType);
+
                 var Profile = new Profile()
                 {
                     City = profile.City,
                     Name = profile.Name,
                     LastName = profile.LastName,
-                    UrlPhoto = profile.UrlPhoto,
+                    UrlPhoto = url,
                     Following =  profile.Following,
                     Followers = profile.Followers
                 };
@@ -195,24 +196,6 @@ namespace Web.Controllers
                 return View();
             }
         }
-
-        // POST: Profile/Delete/5
-        [HttpPost]
-        public ActionResult UploadPhoto(HttpPostedFileBase data)
-        {
-            try
-            {
-                BlobService blob = new BlobService();
-                string url = blob.UploadImage("LeagueBookImagesProfile", Guid.NewGuid().ToString(), data.InputStream,
-                    data.ContentType);
-
-
-                return View();
-            }
-            catch(Exception ex)
-            {
-                return View();
-            }
-        }
+        
     }
 }

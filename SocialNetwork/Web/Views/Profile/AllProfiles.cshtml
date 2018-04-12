@@ -4,23 +4,28 @@
     ViewBag.Title = "AllProfiles";
 }
 
-<h2>Todos Perfis</h2>
 
+<div style="padding-left:30px;">
+    <h2>Todos Perfis</h2>
+    @Html.ActionLink("Meu perfil", "Index", "Profile", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Página inicial", "Index", "Feed", null,  new { @class = "btn btn-default" })
+</div>
+<hr />
 @if (Model.Count() > 0)
 {
-    <div class="row">
+    <div class="container">
         @foreach (var p in Model)
         {
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4" style="width: 310px;">
                 <div class="thumbnail">
-                    <img src="@p.UrlPhoto" style="width:200px; height:200px;">
+                    <img src="@p.UrlPhoto" style="height: 175px;">
                     <div class="caption">
                         <h3>@p.Name @p.LastName</h3>
                         <p>@p.City</p>
                         <p>@p.Email</p>
                         <p>Seguindo: @p.Following</p>
                         <p>Seguidores: @p.Followers</p>
-                        <p>
+                        <div style="display: inline-flex;">
                             @if (!p.IsFollowed)
                             {
                                 using (Html.BeginForm("FollowUp", "Follow", method: FormMethod.Post))
@@ -41,10 +46,9 @@
                                     <button type="submit" class="btn btn-danger">Deixar de seguir</button>
                                 }
                             }
-
-                            @*<a href="#/Profile/DetailsProfile/@p.Id" class="btn btn-primary" role="button">Ver Perfil</a>*@
-                            @Html.ActionLink("Ver Perfil", "DetailsProfile/" + p.Id, "Profile/", new { @class = "btn btn-primary" })
-                        </p>
+                            
+                            <a href="DetailsProfile/@p.Id" class="btn btn-primary" style="margin-left: 10px;">Ver perfil</a>
+                        </div>
                     </div>
                 </div>
             </div>
